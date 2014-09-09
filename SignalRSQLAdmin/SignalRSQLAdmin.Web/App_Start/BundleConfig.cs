@@ -25,6 +25,7 @@ namespace SignalRSQLAdmin.Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/dashboard.css",
                       "~/Content/site.css"));
 
             // Définissez EnableOptimizations sur False pour le débogage. Pour plus d'informations,
