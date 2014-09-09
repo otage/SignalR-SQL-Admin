@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
 {
@@ -12,9 +13,12 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
     {
         public ActionResult Index()
         {
-            List<TableModel> tables = ITableReader.GetTablesFromDb( "master" );
-            ViewData["tables"] = tables;
-            return View();
+            string dbName = "master";
+            ITableReader tableReader = new Tables();
+            List<TableModel> tables = tableReader.GetTablesFromDb(dbName);
+
+            ViewData["dbName"] = dbName;
+            return View(tables);
         }
  
 

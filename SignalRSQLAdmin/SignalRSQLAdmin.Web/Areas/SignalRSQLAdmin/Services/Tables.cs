@@ -11,14 +11,16 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
     {
 
 
-        static private string GetConnectionString( string dbName )
+        private static string GetConnectionString(string dbName)
         {
             // Will return the correct ConnectionString with the correct DB given
-            return "Data Source=(local);Initial Catalog=AdventureWorks;"
-                + "Integrated Security=SSPI;";
+            // TODO : May be check dbname before made the concat..
+            return @"Server=.\SQLEXPRESS;Database="
+                + dbName
+                + ";User Id=sa;Password=vii2s8di;";
         }
 
-        static public List<TableModel> GetTablesFromDb(string dbName)
+        public List<TableModel> GetTablesFromDb(string dbName)
         {
             List<TableModel> TableModels = new List<TableModel>();
             using ( SqlConnection connection = new SqlConnection( GetConnectionString( dbName ) ) )
@@ -43,7 +45,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
             return TableModels;
         }
 
-        static public TableModel GetTableFromDb( string tableName, string dbName )
+        public TableModel GetTableFromDb(string tableName, string dbName)
         {
             TableModel tm = new TableModel();
             string sqlQuery = "SELECT c.name 'Column Name', t.Name 'Data type', c.max_length 'Max Length', c.is_nullable, ISNULL(i.is_primary_key, 0) 'Primary Key'"

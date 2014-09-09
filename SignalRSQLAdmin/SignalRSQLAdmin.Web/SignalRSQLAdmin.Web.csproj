@@ -167,6 +167,8 @@
     <Compile Include="Areas\SignalRSQLAdmin\Controllers\MainController.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Models\FieldModel.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Models\TableModel.cs" />
+    <Compile Include="Areas\SignalRSQLAdmin\Services\ITableAction.cs" />
+    <Compile Include="Areas\SignalRSQLAdmin\Services\ITableReader.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Services\Tables.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\SignalRSQLAdminAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
