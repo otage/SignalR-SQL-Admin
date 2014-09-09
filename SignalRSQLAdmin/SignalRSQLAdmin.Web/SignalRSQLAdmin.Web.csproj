@@ -190,6 +190,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\SignalRSQLAdmin\Views\web.config" />
     <Content Include="Areas\SignalRSQLAdmin\Views\Main\Index.cshtml" />
+    <Content Include="Areas\SignalRSQLAdmin\Views\Shared\_LeftSideBar.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -246,7 +247,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\SignalRSQLAdmin\Models\" />
-    <Folder Include="Areas\SignalRSQLAdmin\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
