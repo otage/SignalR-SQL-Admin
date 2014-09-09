@@ -18,7 +18,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
                 + "Integrated Security=SSPI;";
         }
 
-        public List<TableModel> GetTablesFromDb(string dbName)
+        static public List<TableModel> GetTablesFromDb(string dbName)
         {
             List<TableModel> TableModels = new List<TableModel>();
             using ( SqlConnection connection = new SqlConnection( GetConnectionString( dbName ) ) )
