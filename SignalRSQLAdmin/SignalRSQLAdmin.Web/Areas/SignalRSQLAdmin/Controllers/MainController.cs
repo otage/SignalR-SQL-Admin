@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models;
+using SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +12,16 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
     {
         public ActionResult Index()
         {
+            List<TableModel> tables = ITableReader.GetTablesFromDb( "master" );
+            ViewData["tables"] = tables;
             return View();
+        }
+ 
+
+        public void CreateTable()
+        {
+            // Call Notify and give Returned id
+            
         }
     }
 }
