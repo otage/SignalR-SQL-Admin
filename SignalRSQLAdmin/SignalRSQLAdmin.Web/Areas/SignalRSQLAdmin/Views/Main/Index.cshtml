@@ -1,4 +1,4 @@
-﻿@model List<SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models.TableModel>
+﻿@model SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models.TableModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -23,7 +23,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Table Structure</h3>
+                    <h3 class="box-title">Table Structure : @Model.Name , @Model.Type</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body table-responsive">
                     <table id="example2" class="table table-bordered table-hover">
@@ -31,15 +31,21 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Type</th>
+                                <th>Max Length</th>
+                                <th>Is Null</th>
+                                <th>Is Primary Key</th>
                                
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var table in Model)
+                            @foreach (var f in Model.Fields)
                             {
                                 <tr>
-                                    <td>@table.Name</td>
-                                    <td>@table.Type</td>
+                                    <td>@f.Name</td>
+                                    <td>@f.Type</td>
+                                    <td>@f.MaxLength</td>
+                                    <td>@f.isNullable</td>
+                                    <td>@f.isPrimaryKey</td>
                                 </tr>
                             }
                         </tbody>

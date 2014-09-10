@@ -13,9 +13,9 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models
 
         public int MaxLength { get; set; }
 
-        public int isNullable { get; set; }
+        public bool isNullable { get; set; }
 
-        public int isPrimaryKey { get; set; }
+        public bool isPrimaryKey { get; set; }
 
     }
 }
