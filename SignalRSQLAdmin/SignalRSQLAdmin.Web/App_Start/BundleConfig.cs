@@ -9,7 +9,8 @@ namespace SignalRSQLAdmin.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery.dataTables.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -21,12 +22,18 @@ namespace SignalRSQLAdmin.Web
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/dataTables.bootstrap.js",
+                      "~/Scripts/app_template.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/dashboard.css",
-                      "~/Content/site.css"));
+                      "~/Content/font-awesome.css",
+                      "~/Content/ionicons.css",
+                      "~/Content/dataTables.bootstrap.css",
+                      "~/Content/AdminLTE.css",
+                      "~/Content/site.css"
+                      ));
 
             // Définissez EnableOptimizations sur False pour le débogage. Pour plus d'informations,
             // visitez http://go.microsoft.com/fwlink/?LinkId=301862
