@@ -157,7 +157,6 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
         {
             //TRY CATCH !!!
             CreateTableResult result  = new CreateTableResult();
-            result.ErrorMessage = "error";
             return result;
         }
     }
