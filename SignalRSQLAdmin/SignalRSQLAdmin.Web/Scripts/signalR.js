@@ -1,4 +1,5 @@
 ﻿$(function () {
+    console.log("init");
     // Reference the auto-generated proxy for the hub.
     var mainHub = $.connection.mainHub;
 
@@ -21,7 +22,7 @@
             var fakejson = {
                 Name: "lol",
                 Fields: [
-                    { Name: "Test", IsPrimaryKey: true, IsNullable: false, Type: "int", MaxLength: 2000 }
+                    { Name: "test", IsPrimaryKey: true, IsNullable: false, Type: "int", MaxLength: 200 }
                 ]
             };
             mainHub.server.createTable(fakejson);

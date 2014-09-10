@@ -2,8 +2,10 @@
 using SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -156,7 +158,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 
         public CreateTableResult CreateTable( CreateTableModel model )
         {
-            string dbName = "master";
+            string dbName = "TestSignalR";
             CreateTableResult result  = new CreateTableResult();
 
             Server myServer = new Server( @".\SQLEXPRESS" );
@@ -170,23 +172,28 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
             try
             {
                 myServer.ConnectionContext.Connect();
-                Database myDatabase = new Database( myServer, dbName );
+                Database myDatabase;
+                myDatabase = myServer.Databases[dbName]; 
                 Table myEmpTable = new Table( myDatabase, model.Name );
 
-                foreach ( var f in model.Fields )
+                foreach (var f in model.Fields)
                 {
-                    var dataType =  DataType.Int;
-                    Column tmpField = new Column( myEmpTable, f.Name , dataType );
-                    if ( f.IsPrimaryKey )
+                    //Need to select the Type
+                    var dataType = DataType.Int;
+                    Column tmpField = new Column(myEmpTable, f.Name, dataType);
+                    if (f.IsPrimaryKey)
                         tmpField.Identity = true;
-                    if ( f.IsNullable )
+                    if (f.IsNullable)
                         tmpField.Nullable = true;
+                    myEmpTable.Columns.Add(tmpField);
                 }
+
+                myEmpTable.Create();
             }
            
-            catch 
+            catch (Exception e)
             {
-                result.ErrorMessage = "Something went wrong...Noob.";
+                result.ErrorMessage = e.Message;
             }
 
             finally
