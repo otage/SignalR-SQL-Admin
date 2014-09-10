@@ -2,48 +2,52 @@
     Layout = null;
 }
 <script>
-   
+    $(function () {
+        var baseValueForm = $('#valueFormBase').clone().attr('id','');
+        $("#buttonAddValue").click(function () {
+            var newBaseValueForm = baseValueForm.clone();
+            newBaseValueForm.insertBefore('#buttonAddValue');
+        });
+    });
 </script>
 <div class="modal fade" id="formTable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="myModalLabel">Create a new Table</h4>
             </div>
             <div class="modal-body">
                 <form role="form">
                     <div class="box-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Table Name</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="">
+                            <input type="text" class="form-control" id="formTableName" placeholder="">
                         </div>
                         <label for="">Values</label>
-                        <div class="form-group">
-                            Name: 
-                            <input type="text" class="form-control input-small" id="formValueName" name="formValueName" placeholder="Name">
-                            Type
-                            <select class="form-control input-small" id="formValueType" name="formValueType">
-                                <option>int</option>
-                                <option>varchar</option>
-                                <option>date</option>
-                            </select>
-                            IsNull
-                            <input type="checkbox" style="" id="formIsNull" name="formIsNull">
-                            Primary Key
-                            <input type="checkbox" style="" id="formIsPrimary" name="formIsPrimary">
-                        </div>
-                        @*<div class="checkbox">
-                            <label class="hover">
-                                <div class="icheckbox_minimal hover" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div> Check me out
-                            </label>
-                        </div>*@
-                    </div><!-- /.box-body -->
+                        <div class="form-group valueForm" id="valueFormBase">
+                            <div class="form-inline">
+                                Name:
+                                <input type="text" class="form-control input-small" id="formValueName" name="formValueName" placeholder="Name">
+                                Type:
+                                <select class="form-control input-small" id="formValueType" name="formValueType">
+                                    <option>int</option>
+                                    <option>varchar</option>
+                                    <option>date</option>
+                                </select>
+                                IsNull:
+                                <input type="checkbox" style="" id="formIsNull" name="formIsNull">
+                                Primary Key:
+                                <input type="checkbox" style="" id="formIsPrimary" name="formIsPrimary">
+                            </div>
+                         </div>
+                        <button type="button" class="btn btn-default" id="buttonAddValue">Add Value</button>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="buttonSubmitForm">Save changes</button>
+                <button type="button" class="btn btn-success" id="buttonSubmitForm">Save changes</button>
             </div>
         </div>
     </div>

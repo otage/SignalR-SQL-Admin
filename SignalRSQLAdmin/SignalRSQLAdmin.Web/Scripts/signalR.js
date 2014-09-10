@@ -1,4 +1,25 @@
 ﻿$(function () {
+    $("#buttonSubmitForm").click(function () {
+        // Verifs a faire!
+        var tableName = $('#formTableName').val();
+        var valuesForm = $('.valueForm');
+        var jsonTable = {
+            Name: tableName,
+            Fields: [{}]
+        };
+        var i = 0;
+        valuesForm.each(function () {
+            var vName = $(this).find('#formValueName').val();
+            var vIsNull = $(this).find('#formIsNull').val();
+            var vIsPrimary = $(this).find('#formIsPrimary').val();
+            var vType = $('#formValueType option:selected').text()
+            
+            jsonTable['Fields'][i] = { Name: vName, IsPrimaryKey: vIsPrimary, IsNullable: vIsNull, Type: vType, MaxLength: 55 };
+            i++;
+        });
+        console.log(jsonTable);
+    });
+    
     // Reference the auto-generated proxy for the hub.
     var mainHub = $.connection.mainHub;
 

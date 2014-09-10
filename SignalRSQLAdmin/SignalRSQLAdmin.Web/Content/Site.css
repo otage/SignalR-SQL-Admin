@@ -22,3 +22,19 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.valueForm {
+    border: solid 1px rgb(163, 163, 163);
+}
+
+.valueForm{
+    padding: 15px;
+}
+
+#formValueName{
+    width: 135px;
+}
+#formValueType{
+    width: 100px;
+}
+
