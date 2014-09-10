@@ -15,8 +15,13 @@
         }
         $('#notificationsList').append($(notificationText).hide().fadeIn(2000));
         updateNotificationsCount();
-
     };
+
+    // Display a Table on the Dashboard
+    mainHub.client.displaySelectedTable = function (result) {
+        console.log(result);
+        console.log("plop");
+    }
 
     // Start the connection.
     $.connection.hub.start().done(function () {
@@ -29,6 +34,12 @@
                 ]
             };
             mainHub.server.createTable(fakejson);
+        });
+
+        // Load a Table
+        $('.table-selector').click(function () {
+           var tableName = $(this).find('.table-name').attr("data-name");
+           mainHub.server.displayTableResult(tableName);
         });
     });
 });
