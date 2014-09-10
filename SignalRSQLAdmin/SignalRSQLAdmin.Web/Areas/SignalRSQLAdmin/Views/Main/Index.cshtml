@@ -14,6 +14,16 @@
     <script src="~/signalr/hubs"></script>
     <!--SignalR script to update the chat page and send messages.-->
     <script>
+        $("#buttonSubmitForm").click(function () {
+            alert("Handler for .click() called.");
+            var jsonTable = {
+                Name: "lol",
+                Fields: [
+                    ["name", "type"],
+                    ["name2", "type2LOL"]
+                ]
+            };
+        });
         $(function () {
             // Reference the auto-generated proxy for the hub.
             var mainHub = $.connection.mainHub;

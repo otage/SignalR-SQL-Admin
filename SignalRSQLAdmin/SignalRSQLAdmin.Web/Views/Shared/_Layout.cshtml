@@ -7,7 +7,7 @@
     <title>@ViewBag.Title - SignalR SQL Admin</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    
+    @Scripts.Render("~/bundles/jquery")
 
 </head>
 <body class="pace-done skin-black fixed">
@@ -27,8 +27,8 @@
             </footer>
         </aside>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
+    @RenderPage("~/Views/Shared/_ModalFormTable.cshtml", @Model)
+   
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
