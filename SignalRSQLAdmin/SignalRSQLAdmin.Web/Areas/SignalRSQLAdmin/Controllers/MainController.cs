@@ -13,12 +13,12 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
     {
         public ActionResult Index()
         {
-            string dbName = "master";
-            ITableReader tableReader = new Tables();
-            List<TableModel> tables = tableReader.GetTablesFromDb(dbName);
+            //string dbName = "master";
+            //ITableReader tableReader = new Tables();
+            //List<TableModel> tables = tableReader.GetTablesFromDb(dbName);
 
-            ViewData["dbName"] = dbName;
-            return View(tables);
+            //ViewData["dbName"] = dbName;
+            return View();
         }
  
 
