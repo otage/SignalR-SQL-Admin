@@ -22,13 +22,13 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Hubs
             Clients.All.displayMessage( message );
         }
 
-        public TableActionResult CreateTable(CreateTableModel model)
-        {
-            if (model.IsValid)
-            {
-                return _tableActions.CreateTable(model);
-            }
-            Notify("Model not valid");
-        }
+        //public TableActionResult CreateTable(CreateTableModel model)
+        //{
+        //    if (model.IsValid)
+        //    {
+        //        return _tableActions.CreateTable(model);
+        //    }
+        //    Notify("Model not valid");
+        //}
     }
 }

@@ -16,7 +16,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
             string dbName = "master";
             string tableName = "dbo.MSreplication_options";
 
-            ITableReader tableReader = new Tables();
+            ITableReader tableReader = new TablesManager();
             //List<TableModel> tables = tableReader.GetTablesFromDb(dbName);
 
             TableModel table = tableReader.GetTableInfoFromDb(tableName, dbName);
