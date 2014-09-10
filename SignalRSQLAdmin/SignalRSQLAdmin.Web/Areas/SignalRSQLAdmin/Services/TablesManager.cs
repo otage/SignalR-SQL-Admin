@@ -62,7 +62,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
         public List<Array> GetTable(string tableName, string dbName)
         { 
             List<Array> result = new List<Array>();
-            string sqlQuery = "";
+            string sqlQuery = "SELECT * FROM " + tableName;
 
             using (SqlConnection connection = new SqlConnection(GetConnectionString(dbName)))
             {
@@ -76,7 +76,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 
                             while (reader.Read())
                             {
-                               Object[] tmp = new Object[]{};
+                                Object[] tmp = new Object[reader.FieldCount];
                                for (int i = 0; i < reader.FieldCount; i++)
                                {
                                    tmp[i] = reader[i];
