@@ -1,6 +1,7 @@
 ﻿using SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -17,7 +18,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
             // TODO : May be check dbname before made the concat..
             return @"Server=.\SQLEXPRESS;Database="
                 + dbName
-                + ";User Id=sa;Password=vii2s8di;";
+                + "pp;User Id=sa;Password=vii2s8di;";
         }
 
         public List<TableModel> GetTablesFromDb(string dbName)
@@ -25,20 +26,33 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
             List<TableModel> TableModels = new List<TableModel>();
             using ( SqlConnection connection = new SqlConnection( GetConnectionString( dbName ) ) )
             {
-
-                connection.Open();
-                string sqlQuery = "SELECT * FROM information_schema.tables";
-                using ( SqlCommand command = new SqlCommand( sqlQuery, connection ) )
-
-                using ( SqlDataReader reader = command.ExecuteReader() )
+                try
                 {
-                    
-                    while ( reader.Read() )
+                    connection.Open();
+                    string sqlQuery = "SELECT * FROM information_schema.tables";
+                    using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        TableModel tm = new TableModel();
-                        tm.Name = reader.GetString( 2 );
-                        tm.Type = reader.GetString( 3 );
-                        TableModels.Add( tm );
+
+                        while (reader.Read())
+                        {
+                            TableModel tm = new TableModel();
+                            tm.Name = reader.GetString(2);
+                            tm.Type = reader.GetString(3);
+                            TableModels.Add(tm);
+                        }
+                    }
+                }
+                catch 
+                {
+                    return TableModels;
+                }
+                finally 
+                {
+                    if ( connection.State == ConnectionState.Open )
+                    {
+                        connection.Close();
                     }
                 }
             }
@@ -56,27 +70,41 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 
             using ( SqlConnection connection = new SqlConnection( GetConnectionString( dbName ) ) )
             {
-                
-                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                try
                 {
-                    SqlParameter param = new SqlParameter();
-                    param.ParameterName = "@tableName";
-                    param.Value = tableName;
-                    command.Parameters.Add(param);
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                     {
-                        
-                        tm.Name = tableName;
-                        while (reader.Read())
+                        SqlParameter param = new SqlParameter();
+                        param.ParameterName = "@tableName";
+                        param.Value = tableName;
+                        command.Parameters.Add(param);
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            FieldModel fm = new FieldModel();
-                            fm.Name = reader.GetString(0);
-                            fm.Type = reader.GetString(1);
-                            fm.MaxLength = reader.GetInt32(2);
-                            fm.isNullable = reader.GetInt32(3);
-                            fm.isPrimaryKey = reader.GetInt32(4);
-                            tm.Fields.Add( fm );
+
+                            tm.Name = tableName;
+                            while (reader.Read())
+                            {
+                                FieldModel fm = new FieldModel();
+                                fm.Name = reader.GetString(0);
+                                fm.Type = reader.GetString(1);
+                                fm.MaxLength = reader.GetInt32(2);
+                                fm.isNullable = reader.GetInt32(3);
+                                fm.isPrimaryKey = reader.GetInt32(4);
+                                tm.Fields.Add(fm);
+                            }
                         }
+                    }
+                }
+                catch 
+                {
+                    return tm;
+                }
+                finally 
+                {
+                    if (connection.State == ConnectionState.Open)
+                    {
+                        connection.Close();
                     }
                 }
             }
