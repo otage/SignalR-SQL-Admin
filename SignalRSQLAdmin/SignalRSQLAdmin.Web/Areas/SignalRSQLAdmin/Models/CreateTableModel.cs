@@ -7,7 +7,10 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models
 {
     public class CreateTableModel
     {
-        string Name { get; set; }
-        Dictionary<string, string> Fields { get; set; }
+        public string Name { get; set; }
+        public string[][] Fields { get; set; }
+
+        //TODO !!
+        public bool IsValid = true;
     }
 }

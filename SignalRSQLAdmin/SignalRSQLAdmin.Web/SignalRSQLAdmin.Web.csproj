@@ -166,11 +166,14 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Controllers\MainController.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Hubs\MainHub.cs" />
+    <Compile Include="Areas\SignalRSQLAdmin\Hubs\MainHub.Views.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Models\CreateTableModel.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Models\FieldModel.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Models\TableModel.cs" />
+    <Compile Include="Areas\SignalRSQLAdmin\Services\CreateTableResult.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Services\ITableActions.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Services\ITableReader.cs" />
+    <Compile Include="Areas\SignalRSQLAdmin\Services\Result.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Services\TablesManager.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\SignalRSQLAdminAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -218,6 +221,7 @@
     <Content Include="fonts\ionicons.eot" />
     <Content Include="fonts\ionicons.ttf" />
     <Content Include="fonts\ionicons.woff" />
+    <Compile Include="Areas\SignalRSQLAdmin\Hubs\MainHub.Actions.cs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dataTables.bootstrap.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
