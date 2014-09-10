@@ -14,7 +14,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
         public ActionResult Index()
         {
             string dbName = "master";
-            ITableReader tableReader = new Tables();
+            ITableReader tableReader = new TablesManager();
             List<TableModel> tables = tableReader.GetTablesFromDb(dbName);
 
             ViewData["dbName"] = dbName;

@@ -8,7 +8,7 @@ using System.Web;
 
 namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 {
-    public class Tables : ITableReader, ITableAction
+    public class TablesManager : ITableReader, ITableActions
     {
 
 
