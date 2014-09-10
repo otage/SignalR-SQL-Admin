@@ -16,22 +16,25 @@
         $(function () {
             // Reference the auto-generated proxy for the hub.
             var mainHub = $.connection.mainHub;
+
             // Create a function that the hub can call back to display messages.
-            mainHub.client.fuckAllClients = function (name) {
+            mainHub.client.notifyCreateTableResult = function (result) {
                 // Add the message to the page.
-                $('#discussion').append(name + 'fuck tous les clients');
+                $('#discussion').append("lol");
             };
-            // Get the user name and store it to prepend to messages.
-            //$('#displayname').val(prompt('Enter your name:', ''));
-            // Set initial focus to message input box.
-            //$('#message').focus();
+
             // Start the connection.
             $.connection.hub.start().done(function () {
                 $('#discussion').click(function () {
                     // Call the Send method on the hub.
-                    mainHub.server.hello();
-                    // Clear text box and reset focus for next comment.
-                    // $('#message').val('').focus();
+                    var fakejson = {
+                        Name : "lol",
+                        Fields : [
+                            ["name", "type"], 
+                            ["name2", "type2LOL"]
+                        ]
+                };
+                mainHub.server.createTable( fakejson );
                 });
             });
         });

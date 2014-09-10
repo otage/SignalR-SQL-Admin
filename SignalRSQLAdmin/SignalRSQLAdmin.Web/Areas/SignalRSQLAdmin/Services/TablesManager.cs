@@ -110,5 +110,11 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
             }
             return tm;
         }
+
+        public CreateTableResult CreateTable(CreateTableModel model)
+        {
+            //TRY CATCH !!!
+            return new CreateTableResult();
+        }
     }
 }

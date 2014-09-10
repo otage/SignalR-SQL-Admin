@@ -2,13 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
 namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 {
-    interface ITableActions
+    public class CreateTableResult : Result
     {
-        CreateTableResult CreateTable( CreateTableModel model );
+        public TableModel TableModel { get; set; }
     }
 }
