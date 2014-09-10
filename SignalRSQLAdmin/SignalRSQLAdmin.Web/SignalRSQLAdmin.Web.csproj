@@ -165,6 +165,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Controllers\MainController.cs" />
+    <Compile Include="Areas\SignalRSQLAdmin\Hubs\MainHub.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Models\FieldModel.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Models\TableModel.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Services\ITableAction.cs" />

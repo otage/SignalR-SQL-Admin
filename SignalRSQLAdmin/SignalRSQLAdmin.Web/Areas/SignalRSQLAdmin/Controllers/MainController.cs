@@ -21,6 +21,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
 
             TableModel table = tableReader.GetTableInfoFromDb(tableName, dbName);
 
+
             ViewData["dbName"] = dbName;
             return View(table);
         }
