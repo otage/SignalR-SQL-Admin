@@ -1,4 +1,5 @@
-﻿using SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models;
+﻿using Microsoft.SqlServer.Management.Smo;
+using SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,9 +17,9 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
         {
             // Will return the correct ConnectionString with the correct DB given
             // TODO : May be check dbname before made the concat..
-            return @"Server=ANTOINE;Database="
+            return @"Server=.\SQLEXPRESS;Database="
                 + dbName
-                + ";Trusted_Connection=true;";
+                + ";User Id=sa;Password=vii2s8di;";
         }
 
         public List<TableModel> GetTablesFromDb(string dbName)
@@ -153,10 +154,46 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
             return tm;
         }
 
-        public CreateTableResult CreateTable(CreateTableModel model)
+        public CreateTableResult CreateTable( CreateTableModel model )
         {
-            //TRY CATCH !!!
+            string dbName = "master";
             CreateTableResult result  = new CreateTableResult();
+
+            Server myServer = new Server( @".\SQLEXPRESS" );
+            myServer.ConnectionContext.LoginSecure = false;
+            myServer.ConnectionContext.Login = "sa";
+            myServer.ConnectionContext.Password = "vii2s8di";
+
+            // If using a Secure Connection
+            // myServer.ConnectionContext.LoginSecure = true;
+
+            try
+            {
+                myServer.ConnectionContext.Connect();
+                Database myDatabase = new Database( myServer, dbName );
+                Table myEmpTable = new Table( myDatabase, model.Name );
+
+                foreach ( var f in model.Fields )
+                {
+                    var dataType =  DataType.Int;
+                    Column tmpField = new Column( myEmpTable, f.Name , dataType );
+                    if ( f.IsPrimaryKey )
+                        tmpField.Identity = true;
+                    if ( f.IsNullable )
+                        tmpField.Nullable = true;
+                }
+            }
+           
+            catch 
+            {
+                result.ErrorMessage = "Something went wrong...Noob.";
+            }
+
+            finally
+            {
+                if (myServer.ConnectionContext.IsOpen)
+                    myServer.ConnectionContext.Disconnect();
+            }
             return result;
         }
     }
