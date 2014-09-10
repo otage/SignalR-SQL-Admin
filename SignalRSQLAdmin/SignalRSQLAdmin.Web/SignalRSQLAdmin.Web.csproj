@@ -166,11 +166,12 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Controllers\MainController.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Hubs\MainHub.cs" />
+    <Compile Include="Areas\SignalRSQLAdmin\Models\CreateTableModel.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Models\FieldModel.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Models\TableModel.cs" />
-    <Compile Include="Areas\SignalRSQLAdmin\Services\ITableAction.cs" />
+    <Compile Include="Areas\SignalRSQLAdmin\Services\ITableActions.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Services\ITableReader.cs" />
-    <Compile Include="Areas\SignalRSQLAdmin\Services\Tables.cs" />
+    <Compile Include="Areas\SignalRSQLAdmin\Services\TablesManager.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\SignalRSQLAdminAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
