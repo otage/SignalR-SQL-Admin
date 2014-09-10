@@ -16,6 +16,5 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models
         public bool isNullable { get; set; }
 
         public bool isPrimaryKey { get; set; }
-
     }
 }
