@@ -29,50 +29,19 @@
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Field</th>
+                                <th>Name</th>
                                 <th>Type</th>
-                                <th>Attributes</th>
-                                <th>Null</th>
-                                <th>Action</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>id</td>
-                                <td>
-                                    tinyint
-                                </td>
-                                <td></td>
-                                <td>No</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>name</td>
-                                <td>
-                                   varchar
-                                </td>
-                                <td></td>
-                                <td>No</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>email</td>
-                                <td>
-                                   varchar
-                                </td>
-                                <td></td>
-                                <td>No</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>password</td>
-                                <td>
-                                    varchar
-                                </td>
-                                <td></td>
-                                <td>Yes</td>
-                                <td></td>
-                            </tr>
+                            @foreach (var table in Model)
+                            {
+                                <tr>
+                                    <td>@table.Name</td>
+                                    <td>@table.Type</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div><!-- /.box-body -->
@@ -520,11 +489,3 @@
         </div>
     </div>
 </section>
-
-                        @*@foreach (var table in Model)
-                        {
-                            <tr>
-                                <td>@table.Name</td>
-                                <td>@table.Type</td>
-                            </tr>
-                        }*@

@@ -18,7 +18,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
             // TODO : May be check dbname before made the concat..
             return @"Server=.\SQLEXPRESS;Database="
                 + dbName
-                + "pp;User Id=sa;Password=vii2s8di;";
+                + ";User Id=sa;Password=vii2s8di;";
         }
 
         public List<TableModel> GetTablesFromDb(string dbName)

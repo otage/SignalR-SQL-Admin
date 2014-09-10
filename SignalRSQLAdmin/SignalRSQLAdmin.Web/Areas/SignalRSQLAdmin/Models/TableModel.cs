@@ -12,5 +12,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models
         public string Type { get; set; }
 
         public virtual  List<FieldModel> Fields { get; set; }
+
+        public virtual  List<Array> FirstRows { get; set; }
     }
 }
