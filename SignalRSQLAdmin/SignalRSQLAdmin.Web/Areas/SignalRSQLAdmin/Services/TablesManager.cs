@@ -16,9 +16,9 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
         {
             // Will return the correct ConnectionString with the correct DB given
             // TODO : May be check dbname before made the concat..
-            return @"Server=.\SQLEXPRESS;Database="
+            return @"Server=ANTOINE;Database="
                 + dbName
-                + ";User Id=sa;Password=vii2s8di;";
+                + ";Trusted_Connection=true;";
         }
 
         public List<TableModel> GetTablesFromDb(string dbName)
@@ -156,7 +156,9 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
         public CreateTableResult CreateTable(CreateTableModel model)
         {
             //TRY CATCH !!!
-            return new CreateTableResult();
+            CreateTableResult result  = new CreateTableResult();
+            result.ErrorMessage = "error";
+            return result;
         }
     }
 }

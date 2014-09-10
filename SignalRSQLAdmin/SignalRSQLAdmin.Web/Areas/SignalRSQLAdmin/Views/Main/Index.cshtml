@@ -20,7 +20,13 @@
             // Create a function that the hub can call back to display messages.
             mainHub.client.notifyCreateTableResult = function (result) {
                 // Add the message to the page.
-                $('#discussion').append("lol");
+                if (result.ErrorMessage != null) {
+                    $('#discussion').append("<div>" + result.ErrorMessage + "</div>");
+                }
+                else {
+                    $('#discussion').append("<div> Action OK </div>");
+                }
+
             };
 
             // Start the connection.
