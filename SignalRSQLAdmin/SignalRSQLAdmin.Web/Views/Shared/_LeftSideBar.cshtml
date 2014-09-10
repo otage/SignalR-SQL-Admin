@@ -29,11 +29,8 @@
                 <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-                @foreach (var t in Model)
-                {
-                    var IsActive = t.Name == ViewBag.Name ? "active" : "";
-                    <li class="@IsActive"><a href=""><i class="fa fa-angle-double-right"></i> @t.Name</a></li>
-                }
+                <li><a href=""><i class="fa fa-angle-double-right"></i> Table 1</a></li>
+                <li class="active"><a href=""><i class="fa fa-angle-double-right"></i> Table 2</a></li>
             </ul>
         </li>
     </ul>

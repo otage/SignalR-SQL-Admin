@@ -17,15 +17,28 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
             string tableName = "dbo.MSreplication_options";
 
             ITableReader tableReader = new TablesManager();
-            //List<TableModel> tables = tableReader.GetTablesFromDb(dbName);
 
+            List<TableModel> tables = tableReader.GetTablesFromDb(dbName);
             TableModel table = tableReader.GetTableInfoFromDb(tableName, dbName);
 
 
             ViewData["dbName"] = dbName;
+            ViewData["tablesList"] = tables;
             return View(table);
         }
- 
+
+        public ActionResult DisplayLeftSideBar()
+        {
+            string dbName = "master";
+
+            ITableReader tableReader = new TablesManager();
+
+            List<TableModel> tables = tableReader.GetTablesFromDb(dbName);
+
+
+            ViewData["dbName"] = dbName;
+            return PartialView("_LeftSideBar", tables);
+        }
 
         public void CreateTable()
         {
