@@ -1,4 +1,4 @@
-﻿@Model List<SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models.TableModel>
+﻿@Model SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models.TableModel
 <!-- sidebar: style can be found in sidebar.less -->
 <section class="sidebar">
     <!-- Sidebar user panel -->
@@ -29,10 +29,16 @@
                 <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-                <li><a href=""><i class="fa fa-angle-double-right"></i> Table 1</a></li>
-                <li class="active"><a href=""><i class="fa fa-angle-double-right"></i> Table 2</a></li>
+                @foreach (var t in Model)
+                {
+                    //var activeTable = (t.Name == ViewBag.TableName) ? "active" : "";
+                    <li class=""><a href=""><i class="fa fa-angle-double-right"></i> @t.Name</a></li>
+                }
+                <li class=""><a href=""><i class="fa fa-angle-double-right"></i> qsdsq</a></li>
             </ul>
         </li>
+        <li><button class="btn btn-primary btn-sm">TEEST</button></li>
     </ul>
+    <button class="">TEEST</button>
 </section>
 <!-- /.sidebar -->
