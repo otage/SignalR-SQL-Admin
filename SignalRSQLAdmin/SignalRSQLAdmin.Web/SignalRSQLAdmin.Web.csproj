@@ -209,7 +209,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\SignalRSQLAdmin\Views\web.config" />
     <Content Include="Areas\SignalRSQLAdmin\Views\Main\Index.cshtml" />
-    <Content Include="Areas\SignalRSQLAdmin\Views\Shared\_LeftSideBar.cshtml" />
     <Content Include="Content\dataTables.bootstrap.css" />
     <Content Include="Areas\SignalRSQLAdmin\Views\Shared\_Header.cshtml" />
     <Content Include="fonts\fontawesome-webfont.eot" />
@@ -274,6 +273,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_LeftSideBar.cshtml" />
+    <Content Include="Views\Shared\_ModalFormTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
