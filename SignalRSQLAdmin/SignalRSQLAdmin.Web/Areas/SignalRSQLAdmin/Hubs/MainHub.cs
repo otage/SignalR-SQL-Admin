@@ -12,9 +12,6 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Hubs
     {
         ITableActions _tableActions = new TablesManager();
 
-        public void Notify( string message )
-        {
-            Clients.All.displayMessage( message );
-        }   
+
     }
 }
