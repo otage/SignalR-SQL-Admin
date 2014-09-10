@@ -6,12 +6,15 @@
     // Create a function that the hub can call back to display messages.
     mainHub.client.notifyCreateTableResult = function (result) {
         // Add the message to the page.
+        var notificationText;
         if (result.ErrorMessage != null) {
-            $('#discussion').append("<div>" + result.ErrorMessage + "</div>");
+            notificationText = "<li><a href='#'><i class='fa fa-times danger'></i>" + result.ErrorMessage + "</a></li>";
         }
         else {
-            $('#discussion').append("<div> Action OK </div>");
+            notificationText = "<li><a href='#'><i class='fa fa-check-square-o success'></i> Action OK </a></li>";
         }
+        $('#notificationsList').append($(notificationText).hide().fadeIn(2000));
+        updateNotificationsCount();
 
     };
 
@@ -33,4 +36,10 @@
 function htmlEncode(value) {
     var encodedValue = $('<div />').text(value).html();
     return encodedValue;
+}
+
+// Update number of notifications in menu bar.
+function updateNotificationsCount() {
+    var numberOfNotifs = $("#notificationsList li").length;
+    $("#numberOfNotifications").text(numberOfNotifs);
 }

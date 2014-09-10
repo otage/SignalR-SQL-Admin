@@ -19,7 +19,11 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
         {
             // Will return the correct ConnectionString with the correct DB given
             // TODO : May be check dbname before made the concat..
+<<<<<<< Updated upstream
             return @"Server=.\SQLEXPRESS;Database="
+=======
+            return @"Server=ASUS-SANTI;Database="
+>>>>>>> Stashed changes
                 + dbName
                 + ";User Id=sa;Password=vii2s8di;";
         }
