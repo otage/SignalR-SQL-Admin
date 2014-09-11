@@ -197,9 +197,12 @@
     <Compile Include="Areas\SignalRSQLAdmin\Hubs\MainHub.Views.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Models\CreateFieldModel.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Models\CreateTableModel.cs" />
+    <Compile Include="Areas\SignalRSQLAdmin\Models\DeleteTableModel.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Models\FieldModel.cs" />
+    <Compile Include="Areas\SignalRSQLAdmin\Models\Model.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Models\TableModel.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Services\CreateTableResult.cs" />
+    <Compile Include="Areas\SignalRSQLAdmin\Services\DeleteTableResult.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Services\ITableActions.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Services\ITableReader.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Services\Result.cs" />
