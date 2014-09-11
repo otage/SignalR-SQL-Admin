@@ -1,4 +1,4 @@
-
+﻿
 $(function () {
     $("#buttonSubmitForm").click(function () {
         // Verifs a faire!
@@ -34,7 +34,9 @@ $(function () {
             notificationText = "<li><a href='#'><i class='fa fa-times danger'></i>" + result.ErrorMessage + "</a></li>";
         }
         else {
-            notificationText = "<li><a href='#'><i class='fa fa-check-square-o success'></i> Action OK </a></li>";
+            notificationText = "<li><a href='#'><i class='fa fa-check-square-o success'></i>"
+                + "La table " + result.TableModel.Name + " a bien été créée."
+                + "</a></li>"
         }
         $('#notificationsList').append($(notificationText).hide().fadeIn(2000));
         updateNotificationsCount();
