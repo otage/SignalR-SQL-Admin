@@ -2,12 +2,17 @@
     Layout = null;
 }
 <script>
+
+    
     $(function () {
         var baseValueForm = $('#valueFormBase').clone().attr('id','');
         $("#buttonAddValue").click(function () {
             var newBaseValueForm = baseValueForm.clone();
             newBaseValueForm.insertBefore('#buttonAddValue');
         });
+        $('#formTable').on('hidden.bs.modal', function () {
+            $('#errorModalMessage').html('');
+        })
     });
 </script>
 <div class="modal fade" id="formTable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -18,6 +23,7 @@
                 <h4 class="modal-title" id="myModalLabel">Create a new Table</h4>
             </div>
             <div class="modal-body">
+                <div id="errorModalMessage"></div>
                 <form role="form">
                     <div class="box-body">
                         <div class="form-group">
@@ -31,9 +37,10 @@
                                 <input type="text" class="form-control input-small" id="formValueName" name="formValueName" placeholder="Name">
                                 Type:
                                 <select class="form-control input-small" id="formValueType" name="formValueType">
-                                    <option>int</option>
-                                    <option>varchar</option>
-                                    <option>date</option>
+                                    @foreach (var t in ViewBag.listOfTypes)
+                                    {
+                                        <option>@t</option>
+                                    }
                                 </select>
                                 IsNull:
                                 <input type="checkbox" style="" id="formIsNull" name="formIsNull">

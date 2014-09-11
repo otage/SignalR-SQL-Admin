@@ -54,10 +54,11 @@ $(function () {
             console.log('jsuisla');
             p.done(function (result) {
                 if (result.ErrorMessage) {
-                    console.log(result.ErrorMessage);
+                    $('#errorModalMessage').html(result.ErrorMessage);
                 }
                 else {
                     $('#formTable').modal('toggle');
+                    $('#errorModalMessage').html('');
                     var newTableName = result.TableModel.Name;
                     var newLi = '<li class="table-selector"><a href="#" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i> <span class="table-name" data-name="' + newTableName + '">' + newTableName + '</span></a></li>';
                     $('#menuTableList').append(newLi);

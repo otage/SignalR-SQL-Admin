@@ -20,10 +20,12 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
 
             List<TableModel> tables = tableReader.GetTablesFromDb(dbName);
             TableModel table = tableReader.GetTableInfoFromDb(tableName, dbName);
+            List<string> listOfTypes = tableReader.GetListOfDbType(dbName);
 
 
             ViewData["dbName"] = dbName;
             ViewData["tablesList"] = tables;
+            ViewData["listOfTypes"] = listOfTypes;
             return View("~/Areas/SignalRSQLAdmin/Views/Main/Index.cshtml", table);
         }
 

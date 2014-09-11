@@ -11,5 +11,6 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
     {
         TableModel GetTableInfoFromDb(string tableName, string dbName);
         List<TableModel> GetTablesFromDb(string dbName);
+        List<string> GetListOfDbType(string dbName);
     }
 }
