@@ -1,4 +1,5 @@
 ﻿using SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models;
+using SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,12 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Hubs
 {
 	public partial class MainHub
 	{
-        public void CreateTable(CreateTableModel model)
+        public CreateTableResult CreateTable(CreateTableModel model)
         {
             if ( !model.IsValid ) throw new InvalidOperationException( "you modafucka" );
-			NotifyCreateTableResult( _tableActions.CreateTable( model ) );
-            return;
+            var result = _tableActions.CreateTable(model);
+            NotifyCreateTableResult(result);
+            return result;
         }
 	}
 }

@@ -1,27 +1,5 @@
 
 $(function () {
-    $("#buttonSubmitForm").click(function () {
-        // Verifs a faire!
-        var tableName = $('#formTableName').val();
-        var valuesForm = $('.valueForm');
-        var jsonTable = {
-            Name: tableName,
-            Fields: [{}]
-        };
-        var i = 0;
-        valuesForm.each(function () {
-            var vName = $(this).find('#formValueName').val();
-            var vIsNull = $(this).find('#formIsNull').val();
-            var vIsPrimary = $(this).find('#formIsPrimary').val();
-            var vType = $('#formValueType option:selected').text()
-            
-            jsonTable['Fields'][i] = { Name: vName, IsPrimaryKey: vIsPrimary, IsNullable: vIsNull, Type: vType, MaxLength: 55 };
-            i++;
-        });
-        console.log(jsonTable);
-    });
-    
-
     console.log("init");
     // Reference the auto-generated proxy for the hub.
     var mainHub = $.connection.mainHub;
@@ -41,28 +19,54 @@ $(function () {
     };
 
     // Display a Table on the Dashboard
-    mainHub.client.displaySelectedTable = function (result) {
+    function displaySelectedTable(tableName) {
+        $.get('/SignalRSQLAdmin/Main/DisplaySelectedTable/'+tableName,  function(result){
+            $('#bodyResult').html(result);
+        });
         console.log(result);
         console.log("plop");
     }
 
     // Start the connection.
     $.connection.hub.start().done(function () {
-        $('#discussion').click(function () {
-            // Call the Send method on the hub.
-            var fakejson = {
-                Name: "lol",
-                Fields: [
-                    { Name: "test", IsPrimaryKey: true, IsNullable: false, Type: "int", MaxLength: 200 }
-                ]
+        $("#buttonSubmitForm").click(function () {
+            // Verifs a faire!
+            var tableName = $('#formTableName').val();
+            var valuesForm = $('.valueForm');
+            var jsonTable = {
+                Name: tableName,
+                Fields: []
             };
-            mainHub.server.createTable(fakejson);
+            var i = 0;
+            valuesForm.each(function () {
+                var vName = $(this).find('#formValueName').val();
+                var vIsNull = $(this).find('#formIsNull').val();
+                var vIsPrimary = $(this).find('#formIsPrimary').val();
+                var vType = $('#formValueType option:selected').text()
+
+                jsonTable['Fields'][i] = { Name: vName, Type: vType, MaxLength: 55 };
+                i++;
+            });
+            var p = mainHub.server.createTable(jsonTable);
+            console.log('jsuisla');
+            p.done(function (result) {
+                if (result.ErrorMessage) {
+                    console.log(result.ErrorMessage);
+                }
+                else {
+                    $('#formTable').modal('toggle');
+                    var newTableName = result.TableModel.Name;
+                    var newLi = '<li class="table-selector"><a href="#" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i> <span class="table-name" data-name="' + newTableName + '">' + newTableName + '</span></a></li>';
+                    $('#menuTableList').append(newLi);
+                    displaySelectedTable(tableName);
+                }
+            });
         });
 
         // Load a Table
         $('.table-selector').click(function () {
            var tableName = $(this).find('.table-name').attr("data-name");
-           mainHub.server.displayTableResult(tableName);
+           displaySelectedTable(tableName);
         });
     });
 });

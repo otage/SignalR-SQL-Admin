@@ -16,11 +16,12 @@
     </header>
     <div class="wrapper row-offcanvas row-offcanvas-left">
         <aside class="left-side sidebar-offcanvas">
-            @*@RenderPage("~/Areas/SignalRSQLAdmin/Views/Shared/_LeftSideBar.cshtml", @Model)*@
             @Html.Action("DisplayLeftSideBar", "Main");
         </aside>
         <aside class="right-side">
-            @RenderBody()
+            <div id="bodyResult">
+                @RenderBody()
+            </div>
             <hr />
             <footer>
                 <p>&copy; @DateTime.Now.Year - SignalR SQLAdmin - Pierre, Antoine, Santi</p>

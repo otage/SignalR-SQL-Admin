@@ -40,6 +40,18 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
             return PartialView("_LeftSideBar", tables);
         }
 
+        public ActionResult DisplaySelectedTable(string id)
+        {
+            string dbName = "TestSignalR";
+
+            ITableReader tableReader = new TablesManager();
+
+            TableModel table = tableReader.GetTableInfoFromDb(id, dbName);
+
+            ViewData["dbName"] = dbName;
+            return PartialView("Index", table);
+        }
+
         public void CreateTable()
         {
             // Call Notify and give Returned id

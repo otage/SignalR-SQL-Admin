@@ -13,9 +13,9 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 {
     public class TablesManager : ITableReader, ITableActions
     {
-        private static string _server = @".\SQLEXPRESS";
-        private static string _serverUserId = "sa";
-        private static string _serverPassword = "vii2s8di";
+        private static string _server = @"ASUS-SANTI";
+        //private static string _serverUserId = "sa";
+        //private static string _serverPassword = "vii2s8di";
 
         private static string GetConnectionString(string dbName)
         {
@@ -23,7 +23,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
             // TODO : May be check dbname before made the concat..
 
             return @"Server=" + _server + ";Database="
-                + dbName + ";User Id=" + _serverUserId + ";Password=" + _serverPassword + ";";
+                + dbName + "; Trusted_Connection=True;";
         }
 
         public List<string> GetListOfDbType( string dbName )
@@ -196,10 +196,10 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
             string dbName = "TestSignalR";
             CreateTableResult result  = new CreateTableResult();
 
-            Server myServer = new Server( @".\SQLEXPRESS" );
-            myServer.ConnectionContext.LoginSecure = false;
-            myServer.ConnectionContext.Login = "sa";
-            myServer.ConnectionContext.Password = "vii2s8di";
+            Server myServer = new Server(_server);
+            myServer.ConnectionContext.LoginSecure = true;
+            //myServer.ConnectionContext.Login = "sa";
+            //myServer.ConnectionContext.Password = "vii2s8di";
 
             // If using a Secure Connection
             // myServer.ConnectionContext.LoginSecure = true;
@@ -211,8 +211,12 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
                 myDatabase = myServer.Databases[dbName]; 
                 Table myEmpTable = new Table( myDatabase, model.Name );
 
+                result.TableModel.Name = model.Name;
                 foreach (var f in model.Fields)
                 {
+                    var field = new FieldModel();
+                    field.Name = f.Name;
+                    result.TableModel.Fields.Add(field);
                     //Need to select the Type
                     var dataType = DataType.Int;
                     Column tmpField = new Column(myEmpTable, f.Name, dataType);

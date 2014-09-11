@@ -8,6 +8,10 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 {
     public class CreateTableResult : Result
     {
+        public CreateTableResult()
+        {
+            this.TableModel = new TableModel();
+        }
         public TableModel TableModel { get; set; }
     }
 }
