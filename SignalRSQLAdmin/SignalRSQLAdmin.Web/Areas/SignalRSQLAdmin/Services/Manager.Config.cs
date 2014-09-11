@@ -15,7 +15,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 
         private string GetConnectionString()
         {
-            return String.Format(@"Server={0};Database={1};Trusted_Connection=True;", _server, _dbName);
+            return String.Format(@"Server={0};Database={1};dTrusted_Connection=True;", _server, _dbName);
         }
     }
 }
