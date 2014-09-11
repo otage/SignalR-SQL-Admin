@@ -117,3 +117,4 @@ FirstSolution/Intech.Business.Tests/Test.mdf
 FirstSolution/Intech.Business.Tests/TestSupport/Universe.dat
 **/Manager.Config.cs
 **/Manager.Config.cs
+SignalRSQLAdmin/SignalRSQLAdmin.Web/Areas/SignalRSQLAdmin/Services/Manager.Config.cs
