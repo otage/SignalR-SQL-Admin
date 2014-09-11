@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models
 {
-    public class TableModel
+    public class TableModel : Model
     {
         public TableModel()
         {

@@ -10,5 +10,6 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
     interface ITableActions
     {
         CreateTableResult CreateTable( CreateTableModel model );
+        DeleteTableResult DeleteTable(DeleteTableModel model);
     }
 }

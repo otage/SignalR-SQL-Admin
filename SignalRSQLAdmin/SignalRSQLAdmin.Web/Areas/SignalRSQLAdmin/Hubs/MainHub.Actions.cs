@@ -10,9 +10,15 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Hubs
 	{
         public void CreateTable(CreateTableModel model)
         {
-            if ( !model.IsValid ) throw new InvalidOperationException( "you modafucka" );
+            if (!model.Validate()) throw new InvalidOperationException("you modafucka");
 			NotifyCreateTableResult( _tableActions.CreateTable( model ) );
             return;
+        }
+
+        public void DeleteTable(DeleteTableModel model)
+        {
+            if (!model.Validate()) throw new InvalidOperationException("you modafucka");
+
         }
 	}
 }

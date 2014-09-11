@@ -5,9 +5,9 @@ using System.Web;
 
 namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models
 {
-    public class CreateTableModel : Model
+    public class DeleteTableModel : Model
     {
+        public string Database { get; set; }
         public string Name { get; set; }
-        public CreateFieldModel[] Fields { get; set; }
     }
 }

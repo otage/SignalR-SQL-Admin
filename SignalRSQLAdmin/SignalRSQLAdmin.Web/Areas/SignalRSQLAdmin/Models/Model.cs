@@ -5,9 +5,11 @@ using System.Web;
 
 namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models
 {
-    public class CreateTableModel : Model
+    public abstract class Model
     {
-        public string Name { get; set; }
-        public CreateFieldModel[] Fields { get; set; }
+        public virtual bool Validate() 
+        {
+            throw new NotImplementedException();
+        }
     }
 }
