@@ -15,7 +15,7 @@
         @RenderPage("~/Areas/SignalRSQLAdmin/Views/Shared/_Header.cshtml", @Model)
     </header>
     <div class="wrapper row-offcanvas row-offcanvas-left">
-        <aside class="left-side sidebar-offcanvas">
+        <aside id="left-side-bar" class="left-side sidebar-offcanvas">
             @Html.Action("DisplayLeftSideBar", "Main");
         </aside>
         <aside class="right-side" style="padding: 15px;">

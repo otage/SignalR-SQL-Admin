@@ -30,13 +30,6 @@ $(function () {
         addNotification(notificationText);
     };
 
-    // Display a Table on the Dashboard
-    function displaySelectedTable(tableName) {
-        $.get('/SignalRSQLAdmin/Main/DisplaySelectedTable/'+tableName,  function(result){
-            $('#bodyResult').html(result);
-        });
-    }
-
     // Start the connection.
     $.connection.hub.start().done(function () {
         $("#buttonSubmitForm").click(function () {
@@ -74,51 +67,93 @@ $(function () {
             });
         });
 
-        //delete a table
-        $('#deleteTableTest').click(function () {
-            // Call the Send method on the hub.
-            var fakejson = {
-                Database: "TestSignalR",
-                Name: "lol"
-            };
-            mainHub.server.deleteTable(fakejson);
-        });
-
+       
         // Load a Table
         $('.table-selector').click(function () {
            var tableName = $(this).find('.table-name').attr("data-name");
            displaySelectedTable(tableName);
         });
     });
+
+    function deleteTable(TableName) {
+
+        var fakejson = {
+            Database: "TestSignalR",
+            Name: TableName
+        };
+
+        console.log(fakejson);
+        mainHub.server.deleteTable(fakejson);
+    };
+
+    // This optional function html-encodes messages for display in the page.
+    function htmlEncode(value) {
+        var encodedValue = $('<div />').text(value).html();
+        return encodedValue;
+    }
+
+    // adds a notification to notification list
+    function addNotification(text) {
+        $('#notificationsList').prepend($(text).hide().fadeIn(2000));
+        updateNotificationsCount();
+        setListeners();
+    }
+
+    // Update number of notifications in menu bar.
+    function updateNotificationsCount() {
+        var numberOfNotifs = $("#notificationsList li").length;
+        $("#numberOfNotifications").text(numberOfNotifs);
+    }
+
+    // generate a notification's text of a certain type
+    // type can be success or error, nothing else !
+    function generateNotificationText(type, message) {
+        if (type == "success") {
+            return "<li class='successMessage'><a href='#'><i class='fa fa-check-square-o success'></i>"
+                    + message
+                    + "</a></li>";
+        }
+        else if (type == "error") {
+            return "<li><a href='#' class='errorMessage'><i class='fa fa-times danger'></i>" + message + "</a></li>";
+        }
+        throw "Invalid message type";
+    }
+
+    // Display a Table on the Dashboard
+    function displaySelectedTable(tableName) {
+        $.get('/SignalRSQLAdmin/Main/DisplaySelectedTable/' + tableName, function (result) {
+            $('#bodyResult').html(result);
+            setListeners();
+        });
+    }
+
+
+    function refreshLeftBar() {
+        $.get('/SignalRSQLAdmin/Main/DisplayLeftSideBar', function (result) {
+            console.log(result);
+            $('#left-side-bar').html(result);
+            $('#menuTableList').fadeIn(500);
+        });
+    }
+
+    function setListeners() {
+        //delete a table
+        $('#deleteTableTest').click(function () {
+            console.log("plop");
+            var TableName = $(this).attr("data-name");
+            deleteTable(TableName);
+        });
+
+        $('#refresh-button').click(function () {
+            refreshLeftBar();
+        });
+
+        $('.successMessage').click(function () {
+            refreshLeftBar();
+        });
+    };
 });
-// This optional function html-encodes messages for display in the page.
-function htmlEncode(value) {
-    var encodedValue = $('<div />').text(value).html();
-    return encodedValue;
-}
 
-// adds a notification to notification list
-function addNotification(text) {
-    $('#notificationsList').append($(text).hide().fadeIn(2000));
-    updateNotificationsCount();
-}
 
-// Update number of notifications in menu bar.
-function updateNotificationsCount() {
-    var numberOfNotifs = $("#notificationsList li").length;
-    $("#numberOfNotifications").text(numberOfNotifs);
-}
 
-// generate a notification's text of a certain type
-// type can be success or error, nothing else !
-function generateNotificationText(type, message) {
-    if (type == "success") {
-        return "<li id ='successMessage'><a href='#'><i class='fa fa-check-square-o success'></i>"
-                + message
-                + "</a></li>";
-    }
-    else if (type == "error") {
-        return "<li><a href='#' id ='errorMessage'><i class='fa fa-times danger'></i>"  + message + "</a></li>";
-    }
-    throw "Invalid message type";
-}
+
