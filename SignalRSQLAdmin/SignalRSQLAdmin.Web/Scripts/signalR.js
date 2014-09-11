@@ -112,12 +112,12 @@ function updateNotificationsCount() {
 // type can be success or error, nothing else !
 function generateNotificationText(type, message) {
     if (type == "success") {
-        return "<li><a href='#'><i class='fa fa-check-square-o success'></i>"
+        return "<li id ='successMessage'><a href='#'><i class='fa fa-check-square-o success'></i>"
                 + message
                 + "</a></li>";
     }
     else if (type == "error") {
-        return "<li><a href='#'><i class='fa fa-times danger'></i>"  + message + "</a></li>";
+        return "<li><a href='#' id ='errorMessage'><i class='fa fa-times danger'></i>"  + message + "</a></li>";
     }
     throw "Invalid message type";
 }
