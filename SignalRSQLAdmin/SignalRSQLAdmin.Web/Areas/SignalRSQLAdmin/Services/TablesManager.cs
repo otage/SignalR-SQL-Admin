@@ -220,10 +220,8 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 
                     // check Attr Datatype
                     Type t = typeof(DataType);
-                    PropertyInfo p = t.GetProperty(f.Type);
+                    PropertyInfo p = t.GetProperty(f.Type, BindingFlags.IgnoreCase | BindingFlags.Static | BindingFlags.Public);
                     var dt = (DataType)p.GetGetMethod().Invoke( null, new object[0]);
-
-                    // TO DO : Create GEtMethod()..
 
                     
                     Column tmpField = new Column(myEmpTable, f.Name, dt);
@@ -268,9 +266,9 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
             DeleteTableResult result = new DeleteTableResult();
 
             Server myServer = new Server(_server);
-            myServer.ConnectionContext.LoginSecure = true;
-            //myServer.ConnectionContext.Login = "sa";
-            //myServer.ConnectionContext.Password = "vii2s8di";
+            myServer.ConnectionContext.LoginSecure = false;
+            myServer.ConnectionContext.Login = "sa";
+            myServer.ConnectionContext.Password = "vii2s8di";
 
             // If using a Secure Connection
             // myServer.ConnectionContext.LoginSecure = true;

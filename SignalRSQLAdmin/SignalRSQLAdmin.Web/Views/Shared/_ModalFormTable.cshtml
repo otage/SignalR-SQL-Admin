@@ -5,13 +5,14 @@
 
     
     $(function () {
-        var baseValueForm = $('#valueFormBase').clone().attr('id','');
+        var baseValueForm = $('#valueFormBase').clone();
         $("#buttonAddValue").click(function () {
-            var newBaseValueForm = baseValueForm.clone();
-            newBaseValueForm.insertBefore('#buttonAddValue');
+            var newBaseValueForm = baseValueForm.clone().attr('id', '');
+            $('#valuesForms').append(newBaseValueForm);
         });
         $('#formTable').on('hidden.bs.modal', function () {
             $('#errorModalMessage').html('');
+            $('#valuesForms').html(baseValueForm);
         })
     });
 </script>
@@ -31,23 +32,25 @@
                             <input type="text" class="form-control" id="formTableName" placeholder="">
                         </div>
                         <label for="">Values</label>
-                        <div class="form-group valueForm" id="valueFormBase">
-                            <div class="form-inline">
-                                Name:
-                                <input type="text" class="form-control input-small" id="formValueName" name="formValueName" placeholder="Name">
-                                Type:
-                                <select class="form-control input-small" id="formValueType" name="formValueType">
-                                    @foreach (var t in ViewBag.listOfTypes)
-                                    {
-                                        <option>@t</option>
-                                    }
-                                </select>
-                                IsNull:
-                                <input type="checkbox" style="" id="formIsNull" name="formIsNull">
-                                Primary Key:
-                                <input type="checkbox" style="" id="formIsPrimary" name="formIsPrimary">
+                        <div id="valuesForms">
+                            <div class="form-group valueForm" id="valueFormBase">
+                                <div class="form-inline">
+                                    Name:
+                                    <input type="text" class="form-control input-small" id="formValueName" name="formValueName" placeholder="Name">
+                                    Type:
+                                    <select class="form-control input-small" id="formValueType" name="formValueType">
+                                        @foreach (var t in ViewBag.listOfTypes)
+                                        {
+                                            <option>@t</option>
+                                        }
+                                    </select>
+                                    IsNull:
+                                    <input type="checkbox" style="" id="formIsNull" name="formIsNull">
+                                    Primary Key:
+                                    <input type="checkbox" style="" id="formIsPrimary" name="formIsPrimary">
+                                </div>
                             </div>
-                         </div>
+                        </div>
                         <button type="button" class="btn btn-default" id="buttonAddValue">Add Value</button>
                     </div>
                 </form>

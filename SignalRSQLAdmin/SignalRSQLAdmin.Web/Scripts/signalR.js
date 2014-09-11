@@ -94,7 +94,7 @@ $(function () {
 
     // adds a notification to notification list
     function addNotification(text) {
-        $('#notificationsList').append($(text).hide().fadeIn(2000));
+        $('#notificationsList').prepend($(text).hide().fadeIn(2000));
         updateNotificationsCount();
         setListeners();
     }
