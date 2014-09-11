@@ -8,7 +8,7 @@ using System.Web;
 
 namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 {
-    public abstract class Manager : IDisposable
+    public abstract partial class Manager : IDisposable
     {
         private static string _server = @".\SQLEXPRESS";
         private static string _serverUserId = "sa";
