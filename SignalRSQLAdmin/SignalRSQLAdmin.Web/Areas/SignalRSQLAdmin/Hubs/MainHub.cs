@@ -16,5 +16,15 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Hubs
         {
             Clients.All.displayMessage(message);
         }
+
+        //protected override void Dispose(bool disposing)
+        //{
+        //    base.Dispose(disposing);
+        //    if(disposing)
+        //    {
+        //        _tableActions.Dispose();
+        //    }
+        //}
+
     }
 }
