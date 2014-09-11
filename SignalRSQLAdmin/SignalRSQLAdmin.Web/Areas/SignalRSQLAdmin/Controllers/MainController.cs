@@ -18,9 +18,9 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
 
             ITableReader tableReader = new TablesManager(dbName);
 
-            List<TableModel> tables = tableReader.GetTablesFromDb(dbName);
-            TableModel table = tableReader.GetTableInfoFromDb(tableName, dbName);
-            List<string> listOfTypes = tableReader.GetListOfDbType(dbName);
+            List<TableModel> tables = tableReader.GetTables();
+            TableModel table = tableReader.GetTableInfo(tableName);
+            List<string> listOfTypes = tableReader.GetListOfDbType();
 
             ViewData["dbName"] = dbName;
             ViewData["tablesList"] = tables;
@@ -42,7 +42,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
         }
 
         public ActionResult DisplaySelectedTable(string id)
-        {
+        {   
             string dbName = "TestSignalR";
 
             ITableReader tableReader = new TablesManager(dbName);
