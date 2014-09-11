@@ -13,9 +13,9 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 {
     public class TablesManager : ITableReader, ITableActions
     {
-        private static string _server = @".\SQLEXPRESS";
-        private static string _serverUserId = "sa";
-        private static string _serverPassword = "vii2s8di";
+        private static string _server = @"ASUS-SANTI";
+        //private static string _serverUserId = "sa";
+        //private static string _serverPassword = "vii2s8di";
 
         private static string GetConnectionString(string dbName)
         {
@@ -198,8 +198,8 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 
             Server myServer = new Server(_server);
             myServer.ConnectionContext.LoginSecure = false;
-            myServer.ConnectionContext.Login = _serverUserId;
-            myServer.ConnectionContext.Password = _serverPassword;
+            //myServer.ConnectionContext.Login = _serverUserId;
+            //myServer.ConnectionContext.Password = _serverPassword;
 
 
             try
