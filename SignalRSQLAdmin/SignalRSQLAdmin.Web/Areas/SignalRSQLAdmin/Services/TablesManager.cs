@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
@@ -215,9 +216,17 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
                     var field = new FieldModel();
                     field.Name = f.Name;
                     result.TableModel.Fields.Add(field);
-                    //Need to select the Type
-                    var dataType = DataType.Int;
-                    Column tmpField = new Column(myEmpTable, f.Name, dataType);
+                    
+
+                    // check Attr Datatype
+                    Type t = typeof(DataType);
+                    PropertyInfo p = t.GetProperty(f.Type);
+                    var dt = (DataType)p.GetGetMethod().Invoke( null, new object[0]);
+
+                    // TO DO : Create GEtMethod()..
+
+                    
+                    Column tmpField = new Column(myEmpTable, f.Name, dt);
                     if (f.IsPrimaryKey)
                         tmpField.Identity = true;
                     if (f.IsNullable)
@@ -243,10 +252,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
                 }
             }
            
-            catch (Exception e)
-            {
-                result.ErrorMessage = e.Message;
-            }
+         
 
             finally
             {
