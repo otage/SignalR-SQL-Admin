@@ -35,8 +35,6 @@ $(function () {
         $.get('/SignalRSQLAdmin/Main/DisplaySelectedTable/'+tableName,  function(result){
             $('#bodyResult').html(result);
         });
-        console.log(result);
-        console.log("plop");
     }
 
     // Start the connection.
