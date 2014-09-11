@@ -205,6 +205,7 @@
     <Compile Include="Areas\SignalRSQLAdmin\Services\DeleteTableResult.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Services\ITableActions.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Services\ITableReader.cs" />
+    <Compile Include="Areas\SignalRSQLAdmin\Services\Manager.Config.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Services\Manager.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Services\Result.cs" />
     <Compile Include="Areas\SignalRSQLAdmin\Services\TablesManager.cs" />
