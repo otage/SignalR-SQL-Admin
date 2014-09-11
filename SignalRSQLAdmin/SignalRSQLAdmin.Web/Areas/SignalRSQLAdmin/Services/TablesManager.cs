@@ -2,8 +2,10 @@
 using SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -11,24 +13,56 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 {
     public class TablesManager : ITableReader, ITableActions
     {
-
+        private static string _server = @".\SQLEXPRESS";
+        private static string _serverUserId = "sa";
+        private static string _serverPassword = "vii2s8di";
 
         private static string GetConnectionString(string dbName)
         {
             // Will return the correct ConnectionString with the correct DB given
             // TODO : May be check dbname before made the concat..
-<<<<<<< Updated upstream
-            return @"Server=.\SQLEXPRESS;Database="
-=======
-            return @"Server=ASUS-SANTI;Database="
->>>>>>> Stashed changes
-                + dbName
-                + ";User Id=sa;Password=vii2s8di;";
+
+            return @"Server=" + _server + ";Database="
+                + dbName + ";User Id=" + _serverUserId + ";Password=" + _serverPassword + ";";
+        }
+
+        public List<string> GetListOfDbType( string dbName )
+        {
+            string sqlQuery = "SELECT name FROM sys.types";
+            List<string> result = new List<string>(); 
+
+            using (SqlConnection connection = new SqlConnection(GetConnectionString(dbName)))
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+
+                            while (reader.Read())
+                            {
+                                result.Add(reader.GetString(0));
+                            }
+                        }
+                    }
+                }
+               finally 
+                {
+                    if (connection.State == ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+            return result;
         }
 
         public List<TableModel> GetTablesFromDb(string dbName)
         {
             List<TableModel> TableModels = new List<TableModel>();
+            CreateTableResult result = new CreateTableResult();
             using ( SqlConnection connection = new SqlConnection( GetConnectionString( dbName ) ) )
             {
                 try
@@ -142,12 +176,11 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
                                 fm.isPrimaryKey = reader.GetBoolean(4);
                                 tm.Fields.Add(fm);
                             }
-                            tm.FirstRows = GetTable( tableName, dbName );
+                            tm.FirstRows = GetTable(tableName, dbName);
                         }
                     }
                 }
-                
-                finally 
+                finally
                 {
                     if (connection.State == ConnectionState.Open)
                     {
@@ -160,7 +193,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 
         public CreateTableResult CreateTable( CreateTableModel model )
         {
-            string dbName = "master";
+            string dbName = "TestSignalR";
             CreateTableResult result  = new CreateTableResult();
 
             Server myServer = new Server( @".\SQLEXPRESS" );
@@ -174,23 +207,28 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
             try
             {
                 myServer.ConnectionContext.Connect();
-                Database myDatabase = new Database( myServer, dbName );
+                Database myDatabase;
+                myDatabase = myServer.Databases[dbName]; 
                 Table myEmpTable = new Table( myDatabase, model.Name );
 
-                foreach ( var f in model.Fields )
+                foreach (var f in model.Fields)
                 {
-                    var dataType =  DataType.Int;
-                    Column tmpField = new Column( myEmpTable, f.Name , dataType );
-                    if ( f.IsPrimaryKey )
+                    //Need to select the Type
+                    var dataType = DataType.Int;
+                    Column tmpField = new Column(myEmpTable, f.Name, dataType);
+                    if (f.IsPrimaryKey)
                         tmpField.Identity = true;
-                    if ( f.IsNullable )
+                    if (f.IsNullable)
                         tmpField.Nullable = true;
+                    myEmpTable.Columns.Add(tmpField);
                 }
+
+                myEmpTable.Create();
             }
            
-            catch 
+            catch (Exception e)
             {
-                result.ErrorMessage = "Something went wrong...Noob.";
+                result.ErrorMessage = e.Message;
             }
 
             finally

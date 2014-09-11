@@ -13,7 +13,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
     {
         public ActionResult Index()
         {
-            string dbName = "master";
+            string dbName = "TestSignalR";
             string tableName = "dbo.MSreplication_options";
 
             ITableReader tableReader = new TablesManager();
@@ -29,7 +29,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
 
         public ActionResult DisplayLeftSideBar()
         {
-            string dbName = "master";
+            string dbName = "TestSignalR";
 
             ITableReader tableReader = new TablesManager();
 
