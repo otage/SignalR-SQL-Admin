@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 {
-    interface ITableActions
+    interface ITableActions : IDisposable
     {
         CreateTableResult CreateTable( CreateTableModel model );
-        DeleteTableResult DeleteTable(DeleteTableModel model);
+        DeleteTableResult DeleteTable( DeleteTableModel model );
     }
 }

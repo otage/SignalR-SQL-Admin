@@ -10,21 +10,10 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Hubs
 {
     public partial class MainHub : Hub
     {
-        ITableActions _tableActions = new TablesManager();
-
+        public string DbName = "TestSignalR";
         public void Notify(string message)
         {
             Clients.All.displayMessage(message);
         }
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    base.Dispose(disposing);
-        //    if(disposing)
-        //    {
-        //        _tableActions.Dispose();
-        //    }
-        //}
-
     }
 }

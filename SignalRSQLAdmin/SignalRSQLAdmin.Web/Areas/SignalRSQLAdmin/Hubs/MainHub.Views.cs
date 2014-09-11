@@ -26,8 +26,8 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Hubs
 
         public void DisplayTableResult( string tableName )
         {
-            ITableReader tableReader = new TablesManager();
-            TableModel table = tableReader.GetTableInfoFromDb(tableName, "TestSignalR");
+            ITableReader tableReader = new TablesManager(DbName);
+            TableModel table = tableReader.GetTableInfo(tableName);
             Clients.Caller.displaySelectedTable( table );
         }
     }

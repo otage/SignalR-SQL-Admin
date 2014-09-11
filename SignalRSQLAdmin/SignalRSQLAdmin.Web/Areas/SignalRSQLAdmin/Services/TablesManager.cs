@@ -11,138 +11,94 @@ using System.Web;
 
 namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 {
-    public class TablesManager : ITableReader, ITableActions
+    public class TablesManager : Manager, ITableReader, ITableActions
     {
-        private static string _server = @".\SQLEXPRESS";
-        private static string _serverUserId = "sa";
-        private static string _serverPassword = "vii2s8di";
-
-        private static string GetConnectionString(string dbName)
+        public TablesManager( string dbName )
+            : base( dbName )
         {
-            // Will return the correct ConnectionString with the correct DB given
-            // TODO : May be check dbname before made the concat..
-
-            return @"Server=" + _server + ";Database="
-                + dbName + "; Trusted_Connection=True;";
+                 
         }
 
-        public List<string> GetListOfDbType( string dbName )
+        public List<string> GetListOfDbType()
         {
             string sqlQuery = "SELECT name FROM sys.types";
-            List<string> result = new List<string>(); 
+            List<string> result = new List<string>();
+            SqlConnection connection = GetOpenConnection();
 
-            using (SqlConnection connection = new SqlConnection(GetConnectionString(dbName)))
+            try
             {
-                try
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-                    {
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-
-                            while (reader.Read())
-                            {
-                                result.Add(reader.GetString(0));
-                            }
-                        }
-                    }
-                }
-               finally 
-                {
-                    if (connection.State == ConnectionState.Open)
-                    {
-                        connection.Close();
-                    }
-                }
-            }
-            return result;
-        }
-
-        public List<TableModel> GetTablesFromDb(string dbName)
-        {
-            List<TableModel> TableModels = new List<TableModel>();
-            CreateTableResult result = new CreateTableResult();
-            using ( SqlConnection connection = new SqlConnection( GetConnectionString( dbName ) ) )
-            {
-                try
-                {
-                    connection.Open();
-                    string sqlQuery = "SELECT * FROM information_schema.tables";
-                    using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
 
                         while (reader.Read())
                         {
-                            TableModel tm = new TableModel();
-                            tm.Name = reader.GetString(2);
-                            tm.Type = reader.GetString(3);
-                            TableModels.Add(tm);
+                            result.Add(reader.GetString(0));
                         }
                     }
                 }
-                catch 
+            }
+            catch { }
+            return result;
+        }
+
+        public List<TableModel> GetTables()
+        {
+            List<TableModel> TableModels = new List<TableModel>();
+            CreateTableResult result = new CreateTableResult();
+            SqlConnection connection = GetOpenConnection();
+            try
+            {
+                string sqlQuery = "SELECT * FROM information_schema.tables";
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    return TableModels;
-                }
-                finally 
-                {
-                    if ( connection.State == ConnectionState.Open )
+
+                    while (reader.Read())
                     {
-                        connection.Close();
+                        TableModel tm = new TableModel();
+                        tm.Name = reader.GetString(2);
+                        tm.Type = reader.GetString(3);
+                        TableModels.Add(tm);
                     }
                 }
             }
+            catch { }          
             return TableModels;
         }
 
-        public List<Array> GetTable(string tableName, string dbName)
+        public List<Array> GetTable(string tableName)
         { 
             List<Array> result = new List<Array>();
             string sqlQuery = "SELECT * FROM " + tableName;
-
-            using (SqlConnection connection = new SqlConnection(GetConnectionString(dbName)))
+            SqlConnection connection = GetOpenConnection();
+            try
             {
-                try
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
 
-                            while (reader.Read())
+                        while (reader.Read())
+                        {
+                            Object[] tmp = new Object[reader.FieldCount];
+                            for (int i = 0; i < reader.FieldCount; i++)
                             {
-                                Object[] tmp = new Object[reader.FieldCount];
-                               for (int i = 0; i < reader.FieldCount; i++)
-                               {
-                                   tmp[i] = reader[i];
-                               }
-                                result.Add( tmp );
+                                tmp[i] = reader[i];
                             }
+                            result.Add(tmp);
                         }
                     }
                 }
-                catch
-                {
-                    return result;
-                }
-
-                finally 
-                {
-                    if (connection.State == ConnectionState.Open)
-                    {
-                        connection.Close();
-                    }
-                }
             }
+            catch { }
             return result;
 
         }
 
-        public TableModel GetTableInfoFromDb(string tableName, string dbName)
+        public TableModel GetTableInfo(string tableName)
         {
             TableModel tm = new TableModel();
             string sqlQuery = "SELECT c.name 'Column Name', t.Name 'Data type', c.max_length 'Max Length', c.is_nullable, ISNULL(i.is_primary_key, 0) 'Primary Key' "
@@ -150,63 +106,44 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
                 + " LEFT OUTER JOIN sys.index_columns ic ON ic.object_id = c.object_id AND ic.column_id = c.column_id"
                 + " LEFT OUTER JOIN sys.indexes i ON ic.object_id = i.object_id AND ic.index_id = i.index_id"
                 + " WHERE c.object_id = OBJECT_ID(@tableName)";
+            SqlConnection connection = GetOpenConnection();
 
-            using ( SqlConnection connection = new SqlConnection( GetConnectionString( dbName ) ) )
+            try
             {
-                try
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                    SqlParameter param = new SqlParameter();
+                    param.ParameterName = "@tableName";
+                    param.Value = tableName;
+                    command.Parameters.Add(param);
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        SqlParameter param = new SqlParameter();
-                        param.ParameterName = "@tableName";
-                        param.Value = tableName;
-                        command.Parameters.Add(param);
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
 
-                            tm.Name = tableName;
-                            while (reader.Read())
-                            {
-                                FieldModel fm = new FieldModel();
-                                fm.Name = reader.GetString(0);
-                                fm.Type = reader.GetString(1);
-                                fm.MaxLength = reader.GetInt16(2);
-                                fm.IsNullable = reader.GetBoolean(3);
-                                fm.IsPrimaryKey = reader.GetBoolean(4);
-                                tm.Fields.Add(fm);
-                            }
-                            tm.FirstRows = GetTable(tableName, dbName);
+                        tm.Name = tableName;
+                        while (reader.Read())
+                        {
+                            FieldModel fm = new FieldModel();
+                            fm.Name = reader.GetString(0);
+                            fm.Type = reader.GetString(1);
+                            fm.MaxLength = reader.GetInt16(2);
+                            fm.IsNullable = reader.GetBoolean(3);
+                            fm.IsPrimaryKey = reader.GetBoolean(4);
+                            tm.Fields.Add(fm);
                         }
-                    }
-                }
-                finally
-                {
-                    if (connection.State == ConnectionState.Open)
-                    {
-                        connection.Close();
+                        tm.FirstRows = GetTable(tableName);
                     }
                 }
             }
+            catch { }
             return tm;
         }
 
         public CreateTableResult CreateTable( CreateTableModel model )
         {
-            string dbName = "TestSignalR";
             CreateTableResult result  = new CreateTableResult();
-
-            Server myServer = new Server(_server);
-            myServer.ConnectionContext.LoginSecure = false;
-            myServer.ConnectionContext.Login = _serverUserId;
-            myServer.ConnectionContext.Password = _serverPassword;
-
-
             try
             {
-                myServer.ConnectionContext.Connect();
-                Database myDatabase;
-                myDatabase = myServer.Databases[dbName]; 
+                Database myDatabase = GetDatabase();
                 Table myEmpTable = new Table( myDatabase, model.Name );
 
                 result.TableModel.Name = model.Name;
@@ -218,10 +155,8 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
                     //Need to select the Type
                     var dataType = DataType.Int;
                     Column tmpField = new Column(myEmpTable, f.Name, dataType);
-                    if (f.IsPrimaryKey)
-                        tmpField.Identity = true;
-                    if (f.IsNullable)
-                        tmpField.Nullable = true;
+                    if (f.IsPrimaryKey) tmpField.Identity = true;
+                    if (f.IsNullable) tmpField.Nullable = true;
                     myEmpTable.Columns.Add(tmpField);
                 }
 
@@ -247,32 +182,15 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
             {
                 result.ErrorMessage = e.Message;
             }
-
-            finally
-            {
-                if (myServer.ConnectionContext.IsOpen)
-                    myServer.ConnectionContext.Disconnect();
-            }
             return result;
         }
 
         public DeleteTableResult DeleteTable(DeleteTableModel model)
         {
-            string dbName = "TestSignalR";
             DeleteTableResult result = new DeleteTableResult();
-
-            Server myServer = new Server(_server);
-            myServer.ConnectionContext.LoginSecure = true;
-            //myServer.ConnectionContext.Login = "sa";
-            //myServer.ConnectionContext.Password = "vii2s8di";
-
-            // If using a Secure Connection
-            // myServer.ConnectionContext.LoginSecure = true;
-
             try
             {
-                myServer.ConnectionContext.Connect();
-                Database db = myServer.Databases[dbName];
+                Database db = GetDatabase();
                 db.Tables[model.Name].Drop();
 
                 result.Name = model.Name;
@@ -281,12 +199,6 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
             catch (Exception e)
             {
                 result.ErrorMessage = e.Message;
-            }
-
-            finally
-            {
-                if (myServer.ConnectionContext.IsOpen)
-                    myServer.ConnectionContext.Disconnect();
             }
             return result;
         }
