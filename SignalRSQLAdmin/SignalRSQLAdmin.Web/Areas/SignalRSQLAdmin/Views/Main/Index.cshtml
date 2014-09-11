@@ -15,7 +15,11 @@
     <!--SignalR script to update the chat page and send messages.-->
     <script type="text/javascript" src="~/Scripts/signalR.js"></script>
 }
-<a href="#" id="deleteTableTest" class="btn btn-danger" data-name="@Model.Name.Substring(Model.Name.LastIndexOf('.') + 1)">Delete test table</a>
+@if (Model != null)
+{
+    <a href="#" id="deleteTableTest" class="btn btn-danger" data-name="@(Model.Name.Substring(Model.Name.LastIndexOf('.') + 1))">Delete test table</a>
+}
+
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -36,7 +40,6 @@
         <li><a href="#">Tables</a></li>
         <li class="active">@(Model != null ? Model.Name : "")</li>
     </ol>
->>>>>>> 257f76077e19b574cac590f8504189f5a3f34011
 </section>
 <!-- Main content -->
 <section class="content">
