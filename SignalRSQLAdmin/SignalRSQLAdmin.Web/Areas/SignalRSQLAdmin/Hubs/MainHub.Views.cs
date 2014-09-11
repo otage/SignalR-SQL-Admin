@@ -10,13 +10,18 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Hubs
     public partial class MainHub
     {
         public void NotifyCreateTableResult( CreateTableResult result )
-        { 
-            Clients.All.notifyCreateTableResult( result );
+        {
+            if (String.IsNullOrEmpty(result.ErrorMessage))
+            {
+                Clients.All.notifyCreateTableResult( result );
+                return;
+            }
+            Clients.Caller.notifyCreateTableResult( result );
         }
 
         public void NotifyDeleteTableResult(DeleteTableResult result)
         {
-            Clients.All.notifyDeleteTableResult(result);
+            Clients.All.notifyDeleteTableResult( result );
         }
 
         public void DisplayTableResult( string tableName )
