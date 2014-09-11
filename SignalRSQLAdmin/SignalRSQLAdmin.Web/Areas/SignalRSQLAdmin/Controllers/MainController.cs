@@ -16,12 +16,11 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
             string dbName = "TestSignalR";
             string tableName = "dbo.MSreplication_options";
 
-            ITableReader tableReader = new TablesManager();
+            ITableReader tableReader = new TablesManager(dbName);
 
-            List<TableModel> tables = tableReader.GetTablesFromDb(dbName);
-            TableModel table = tableReader.GetTableInfoFromDb(tableName, dbName);
-            List<string> listOfTypes = tableReader.GetListOfDbType(dbName);
-
+            List<TableModel> tables = tableReader.GetTables();
+            TableModel table = tableReader.GetTableInfo(tableName);
+            List<string> listOfTypes = tableReader.GetListOfDbType();
 
             ViewData["dbName"] = dbName;
             ViewData["tablesList"] = tables;
@@ -33,9 +32,9 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
         {
             string dbName = "TestSignalR";
 
-            ITableReader tableReader = new TablesManager();
+            ITableReader tableReader = new TablesManager(dbName);
 
-            List<TableModel> tables = tableReader.GetTablesFromDb(dbName);
+            List<TableModel> tables = tableReader.GetTables();
 
 
             ViewData["dbName"] = dbName;
@@ -43,12 +42,12 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
         }
 
         public ActionResult DisplaySelectedTable(string id)
-        {
+        {   
             string dbName = "TestSignalR";
 
-            ITableReader tableReader = new TablesManager();
+            ITableReader tableReader = new TablesManager(dbName);
 
-            TableModel table = tableReader.GetTableInfoFromDb(id, dbName);
+            TableModel table = tableReader.GetTableInfo(id);
 
             ViewData["dbName"] = dbName;
             return PartialView("Index", table);

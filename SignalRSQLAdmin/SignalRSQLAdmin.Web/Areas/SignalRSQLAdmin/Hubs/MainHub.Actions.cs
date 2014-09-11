@@ -11,18 +11,23 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Hubs
 	{
         public CreateTableResult CreateTable(CreateTableModel model)
         {
-            if ( !model.Validate() ) throw new InvalidOperationException( "you modafucka" );
-            var result = _tableActions.CreateTable(model);
-            NotifyCreateTableResult(result);
+            CreateTableResult result;
+            if (!model.Validate()) throw new InvalidOperationException("you modafucka");
+            using (ITableActions _tableActions = new TablesManager(DbName))
+            {   
+               result = _tableActions.CreateTable(model);
+               NotifyCreateTableResult( result );
+            }
             return result;
         }
 
         public void DeleteTable(DeleteTableModel model)
         {
             if (!model.Validate()) throw new InvalidOperationException("you modafucka");
-            NotifyDeleteTableResult( _tableActions.DeleteTable( model ) );
-            return;
-
+            using (ITableActions _tableActions = new TablesManager(DbName))
+            {
+                NotifyDeleteTableResult(_tableActions.DeleteTable(model));
+            }
         }
 	}
 }
