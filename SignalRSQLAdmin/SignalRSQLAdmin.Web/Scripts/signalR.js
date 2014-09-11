@@ -1,6 +1,7 @@
 ﻿
 $(function () {
     console.log("init");
+    setListeners();
     // Reference the auto-generated proxy for the hub.
     var mainHub = $.connection.mainHub;
 
@@ -66,14 +67,10 @@ $(function () {
                 }
             });
         });
-
-       
-        // Load a Table
-        $('.table-selector').click(function () {
-           var tableName = $(this).find('.table-name').attr("data-name");
-           displaySelectedTable(tableName);
-        });
+        
     });
+
+
 
     function deleteTable(TableName) {
 
@@ -86,8 +83,8 @@ $(function () {
         console.log(fakejson);
         var p = mainHub.server.deleteTable(fakejson);
         p.done(function () {
-            refreshLeftBar();
             displaySelectedTable(null);
+            refreshLeftBar();
             setListeners();
         });
 
@@ -140,14 +137,15 @@ $(function () {
 
     function refreshLeftBar() {
         $.get('/SignalRSQLAdmin/Main/DisplayLeftSideBar', function (result) {
-            console.log(result);
             $('#left-side-bar').html(result);
             $('#menuTableList').fadeIn(500);
+            setListeners();
         });
     }
 
     function setListeners() {
-        //delete a table
+        
+
         $('#deleteTableTest').click(function () {
             console.log("plop");
             var TableName = $(this).attr("data-name");
@@ -160,6 +158,11 @@ $(function () {
 
         $('.successMessage').click(function () {
             refreshLeftBar();
+        });
+
+        $('.table-selector').click(function () {
+            var tableName = $(this).find('.table-name').attr("data-name");
+            displaySelectedTable(tableName);
         });
     };
 });
