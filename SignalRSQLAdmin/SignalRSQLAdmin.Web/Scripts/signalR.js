@@ -37,6 +37,16 @@ $(function () {
         });
     }
 
+    $('#refresh-button').click(function () {
+        $.get('/SignalRSQLAdmin/Main/DisplayLeftSideBar', function (result) {
+            console.log(result);
+            $('#left-side-bar').html(result);
+            $('#menuTableList').fadeIn(500);
+        });
+            
+            
+    })
+
     // Start the connection.
     $.connection.hub.start().done(function () {
         $("#buttonSubmitForm").click(function () {
