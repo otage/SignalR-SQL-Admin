@@ -22,7 +22,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 
         private string GetConnectionString()
         {
-            if (!IsTrustedConnection)
+            if (IsTrustedConnection)
             {
                 return String.Format(@"Server={0};Database={1};Trusted_Connection=True;", _server, _dbName);
             }
