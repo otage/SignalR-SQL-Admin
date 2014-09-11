@@ -24,9 +24,9 @@
         <small>specifications</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> @ViewBag.dbName</a></li>
         <li><a href="#">Tables</a></li>
-        <li class="active">Table 2</li>
+        <li class="active">@Model.Name</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -79,22 +79,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var r in Model.FirstRows)
+                            @if (Model.FirstRows.Any())
+                            {
+                                foreach (var r in Model.FirstRows)
+                                {
+                                    <tr>
+                                        @foreach (var value in r)
+                                        {
+                                            <td>@value</td>
+                                        }
+                                    </tr>
+                                }
+                            }
+                            else
                             {
                                 <tr>
-                                    @foreach (var value in r)
-                                    {
-                                        <td>@value</td>
-                                    }
+                                    <td colspan=@Model.Fields.Count style="text-align:center;">Empty Table</td>
                                 </tr>
                             }
-                           
                         </tbody>
                         <tfoot>
                             <tr>
                                 @foreach (var f in Model.Fields)
                                 {
-                                    <th>@f.Name</th>
+                                    <th> @f.Name</th>
                                 }
                             </tr>
                         </tfoot>

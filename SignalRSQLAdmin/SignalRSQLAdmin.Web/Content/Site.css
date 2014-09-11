@@ -37,4 +37,10 @@ textarea {
 #formValueType{
     width: 100px;
 }
+#errorModalMessage{
+    text-align:center;
+    color:red;
+    font-weight:bold;
+    font-size:12px;
+}
 
