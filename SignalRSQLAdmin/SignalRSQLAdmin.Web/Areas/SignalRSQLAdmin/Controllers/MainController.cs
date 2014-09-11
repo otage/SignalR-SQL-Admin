@@ -24,7 +24,7 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
 
             ViewData["dbName"] = dbName;
             ViewData["tablesList"] = tables;
-            return View(table);
+            return View("~/Areas/SignalRSQLAdmin/Views/Main/Index.cshtml", table);
         }
 
         public ActionResult DisplayLeftSideBar()
