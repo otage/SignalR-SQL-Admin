@@ -18,6 +18,8 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Hubs
         public void DeleteTable(DeleteTableModel model)
         {
             if (!model.Validate()) throw new InvalidOperationException("you modafucka");
+            NotifyDeleteTableResult( _tableActions.DeleteTable( model ) );
+            return;
 
         }
 	}

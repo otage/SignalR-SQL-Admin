@@ -7,6 +7,6 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 {
     public class DeleteTableResult : Result
     {
-        public string name { get; set; }
+        public string Name { get; set; }
     }
 }

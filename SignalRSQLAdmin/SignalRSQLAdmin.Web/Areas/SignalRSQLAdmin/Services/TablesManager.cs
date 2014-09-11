@@ -172,8 +172,8 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
                                 fm.Name = reader.GetString(0);
                                 fm.Type = reader.GetString(1);
                                 fm.MaxLength = reader.GetInt16(2);
-                                fm.isNullable = reader.GetBoolean(3);
-                                fm.isPrimaryKey = reader.GetBoolean(4);
+                                fm.IsNullable = reader.GetBoolean(3);
+                                fm.IsPrimaryKey = reader.GetBoolean(4);
                                 tm.Fields.Add(fm);
                             }
                             tm.FirstRows = GetTable(tableName, dbName);
@@ -229,6 +229,41 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
                 result.TableModel.Name = model.Name;
             }
            
+            catch (Exception e)
+            {
+                result.ErrorMessage = e.Message;
+            }
+
+            finally
+            {
+                if (myServer.ConnectionContext.IsOpen)
+                    myServer.ConnectionContext.Disconnect();
+            }
+            return result;
+        }
+
+        public DeleteTableResult DeleteTable(DeleteTableModel model)
+        {
+            string dbName = "TestSignalR";
+            DeleteTableResult result = new DeleteTableResult();
+
+            Server myServer = new Server(_server);
+            myServer.ConnectionContext.LoginSecure = false;
+            myServer.ConnectionContext.Login = _serverUserId;
+            myServer.ConnectionContext.Password = _serverPassword;
+
+            // If using a Secure Connection
+            // myServer.ConnectionContext.LoginSecure = true;
+
+            try
+            {
+                myServer.ConnectionContext.Connect();
+                Database db = myServer.Databases[dbName];
+                db.Tables[model.Name].Drop();
+
+                result.Name = model.Name;
+            }
+
             catch (Exception e)
             {
                 result.ErrorMessage = e.Message;

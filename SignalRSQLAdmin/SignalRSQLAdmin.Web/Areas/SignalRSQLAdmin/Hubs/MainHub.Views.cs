@@ -14,6 +14,11 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Hubs
             Clients.All.notifyCreateTableResult( result );
         }
 
+        public void NotifyDeleteTableResult(DeleteTableResult result)
+        {
+            Clients.All.notifyDeleteTableResult(result);
+        }
+
         public void DisplayTableResult( string tableName )
         {
             ITableReader tableReader = new TablesManager();
