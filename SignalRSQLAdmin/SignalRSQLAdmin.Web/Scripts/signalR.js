@@ -82,8 +82,15 @@ $(function () {
             Name: TableName
         };
 
+
         console.log(fakejson);
-        mainHub.server.deleteTable(fakejson);
+        var p = mainHub.server.deleteTable(fakejson);
+        p.done(function () {
+            refreshLeftBar();
+            displaySelectedTable(null);
+            setListeners();
+        });
+
     };
 
     // This optional function html-encodes messages for display in the page.
@@ -121,7 +128,10 @@ $(function () {
 
     // Display a Table on the Dashboard
     function displaySelectedTable(tableName) {
-        $.get('/SignalRSQLAdmin/Main/DisplaySelectedTable/' + tableName, function (result) {
+        var queryUrl = "/SignalRSQLAdmin/Main/DisplaySelectedTable";
+        if (tableName != null)
+            queryUrl = '/SignalRSQLAdmin/Main/DisplaySelectedTable/' + tableName;
+        $.get(queryUrl, function (result) {
             $('#bodyResult').html(result);
             setListeners();
         });

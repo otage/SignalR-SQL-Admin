@@ -19,7 +19,10 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
             ITableReader tableReader = new TablesManager(dbName);
 
             List<TableModel> tables = tableReader.GetTables();
+
             TableModel table = tableReader.GetTableInfo(tableName);
+
+            
             List<string> listOfTypes = tableReader.GetListOfDbType();
 
             ViewData["dbName"] = dbName;
@@ -48,7 +51,8 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Controllers
             ITableReader tableReader = new TablesManager(dbName);
 
             TableModel table = tableReader.GetTableInfo(id);
-
+            if (table.Name == null)
+                table = null;
             ViewData["dbName"] = dbName;
             return PartialView("Index", table);
         }
