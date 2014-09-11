@@ -11,14 +11,11 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models
         {
             this.Fields = new List<FieldModel>();
             this.FirstRows = new List<Array>();
-
         }
+
         public string Name { get; set; }
-
         public string Type { get; set; }
-
         public List<FieldModel> Fields { get; set; }
-
         public  List<Array> FirstRows { get; set; }
     }
 }
