@@ -227,6 +227,18 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
                 // TODO : add other informations to tablemodel's result.
                 result.TableModel = new TableModel();
                 result.TableModel.Name = model.Name;
+                result.TableModel.Type = "Table";
+
+                foreach (var field in model.Fields)
+                {
+                    var f = new FieldModel();
+                    f.Name = field.Name;
+                    f.Type = field.Type;
+                    f.IsNullable = field.IsNullable;
+                    f.IsPrimaryKey = field.IsPrimaryKey;
+                    f.MaxLength = field.MaxLength;
+                    result.TableModel.Fields.Add(f);
+                }
             }
            
             catch (Exception e)

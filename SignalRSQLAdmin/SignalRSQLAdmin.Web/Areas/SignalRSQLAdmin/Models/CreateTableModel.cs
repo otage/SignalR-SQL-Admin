@@ -9,5 +9,11 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models
     {
         public string Name { get; set; }
         public CreateFieldModel[] Fields { get; set; }
+
+        // TODO : real validation
+        public override bool Validate()
+        {
+            return true;
+        }
     }
 }
