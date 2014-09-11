@@ -1,21 +1,33 @@
-
+﻿
 $(function () {
     console.log("init");
     // Reference the auto-generated proxy for the hub.
     var mainHub = $.connection.mainHub;
 
-    // Create a function that the hub can call back to display messages.
+    // display notification on table creation
     mainHub.client.notifyCreateTableResult = function (result) {
+        var notificationText;
+        if (result.ErrorMessage != null) {
+            notificationText = generateNotificationText("error", result.ErrorMessage);
+        }
+        else {
+            notificationText = generateNotificationText("success", "La table " + result.TableModel.Name + " a bien été créée.");
+        }
+        
+        addNotification(notificationText);
+    };
+
+    // display notification on table deletion
+    mainHub.client.notifyDeleteTableResult = function (result) {
         // Add the message to the page.
         var notificationText;
         if (result.ErrorMessage != null) {
-            notificationText = "<li><a href='#'><i class='fa fa-times danger'></i>" + result.ErrorMessage + "</a></li>";
+            notificationText = generateNotificationText("error", result.ErrorMessage);
         }
         else {
-            notificationText = "<li><a href='#'><i class='fa fa-check-square-o success'></i> Action OK </a></li>";
+            notificationText = generateNotificationText("success", "La table " + result.Name + " a bien été supprimée.");
         }
-        $('#notificationsList').append($(notificationText).hide().fadeIn(2000));
-        updateNotificationsCount();
+        addNotification(notificationText);
     };
 
     // Display a Table on the Dashboard
@@ -63,6 +75,16 @@ $(function () {
             });
         });
 
+        //delete a table
+        $('#deleteTableTest').click(function () {
+            // Call the Send method on the hub.
+            var fakejson = {
+                Database: "TestSignalR",
+                Name: "lol"
+            };
+            mainHub.server.deleteTable(fakejson);
+        });
+
         // Load a Table
         $('.table-selector').click(function () {
            var tableName = $(this).find('.table-name').attr("data-name");
@@ -76,8 +98,28 @@ function htmlEncode(value) {
     return encodedValue;
 }
 
+// adds a notification to notification list
+function addNotification(text) {
+    $('#notificationsList').append($(text).hide().fadeIn(2000));
+    updateNotificationsCount();
+}
+
 // Update number of notifications in menu bar.
 function updateNotificationsCount() {
     var numberOfNotifs = $("#notificationsList li").length;
     $("#numberOfNotifications").text(numberOfNotifs);
+}
+
+// generate a notification's text of a certain type
+// type can be success or error, nothing else !
+function generateNotificationText(type, message) {
+    if (type == "success") {
+        return "<li><a href='#'><i class='fa fa-check-square-o success'></i>"
+                + message
+                + "</a></li>";
+    }
+    else if (type == "error") {
+        return "<li><a href='#'><i class='fa fa-times danger'></i>"  + message + "</a></li>";
+    }
+    throw "Invalid message type";
 }

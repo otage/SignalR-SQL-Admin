@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Models
 {
-    public class CreateFieldModel
+    public class CreateFieldModel : Model
     {
         public string Name { get; set; }
         public bool IsPrimaryKey { get; set; }
