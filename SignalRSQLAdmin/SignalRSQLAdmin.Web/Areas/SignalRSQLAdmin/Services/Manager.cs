@@ -8,12 +8,8 @@ using System.Web;
 
 namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 {
-    public abstract class Manager : IDisposable
+    public abstract partial class Manager : IDisposable
     {
-        private static string _server = @".\SQLEXPRESS";
-        private static string _serverUserId = "sa";
-        private static string _serverPassword = "vii2s8di";       
-
         private readonly string _dbName;
         Server _smoServer;
         Database _smoDatabase;
@@ -24,23 +20,18 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
             _dbName = dbName;
         }
 
-        private string GetConnectionString()
-        {
-            // Will return the correct ConnectionString with the correct DB given
-            // TODO : May be check dbname before made the concat..
-
-            return @"Server=" + _server + ";Database="
-                + _dbName + "; Trusted_Connection=True;";
-        }
-
         protected Server GetConnectedServer()
         {
             if (_smoServer == null)
             {
                 _smoServer = new Server(_server);
                 _smoServer.ConnectionContext.LoginSecure = true;
-                //_smoServer.ConnectionContext.Login = _serverUserId;
-                //_smoServer.ConnectionContext.Password = _serverPassword;
+                if(!IsTrustedConnection)
+                { 
+                    _smoServer.ConnectionContext.LoginSecure = false;
+                    _smoServer.ConnectionContext.Login = _serverUserId;
+                    _smoServer.ConnectionContext.Password = _serverPassword;
+                }             
                 _smoServer.ConnectionContext.Connect();
             }
             return _smoServer;
