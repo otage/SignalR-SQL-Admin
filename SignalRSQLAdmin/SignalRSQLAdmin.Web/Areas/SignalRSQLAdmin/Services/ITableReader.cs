@@ -9,7 +9,8 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
 {
     interface ITableReader
     {
-        TableModel GetTableInfo(string tableName);
-        List<TableModel> GetTables();
+        TableModel GetTableInfoFromDb(string tableName, string dbName);
+        List<TableModel> GetTablesFromDb(string dbName);
+        List<string> GetListOfDbType(string dbName);
     }
 }

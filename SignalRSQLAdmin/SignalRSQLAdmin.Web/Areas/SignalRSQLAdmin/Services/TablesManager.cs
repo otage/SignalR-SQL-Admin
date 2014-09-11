@@ -141,6 +141,16 @@ namespace SignalRSQLAdmin.Web.Areas.SignalRSQLAdmin.Services
         public CreateTableResult CreateTable( CreateTableModel model )
         {
             CreateTableResult result  = new CreateTableResult();
+<<<<<<< HEAD
+=======
+
+            Server myServer = new Server(_server);
+            myServer.ConnectionContext.LoginSecure = false;
+            //myServer.ConnectionContext.Login = _serverUserId;
+            //myServer.ConnectionContext.Password = _serverPassword;
+
+
+>>>>>>> origin/master
             try
             {
                 Database myDatabase = GetDatabase();
